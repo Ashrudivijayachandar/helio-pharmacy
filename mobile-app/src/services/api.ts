@@ -1,6 +1,6 @@
 /**
- * Simplified API Service for Pharmacy App
- * Mock service for development without external dependencies
+ * API Service for Pharmacy Mobile App
+ * Handles all backend communication and authentication
  */
 
 // API Configuration
@@ -10,7 +10,7 @@ const API_BASE_URL = 'http://localhost:5000/api';
 const TOKEN_KEY = 'pharmacy_access_token';
 const REFRESH_TOKEN_KEY = 'pharmacy_refresh_token';
 
-// Simple mock storage
+// Simple mock storage for development
 class MockStorage {
   private data: Record<string, string> = {};
 
@@ -55,13 +55,13 @@ class ApiService {
     }
   }
 
-  // Token management
-  async setTokens(accessToken: string, refreshToken: string) {
+  // Token management methods
+  async setTokens(accessToken: string, refreshToken: string): Promise<void> {
     await this.storage.setItem(TOKEN_KEY, accessToken);
     await this.storage.setItem(REFRESH_TOKEN_KEY, refreshToken);
   }
 
-  async clearTokens() {
+  async clearTokens(): Promise<void> {
     await this.storage.removeItem(TOKEN_KEY);
     await this.storage.removeItem(REFRESH_TOKEN_KEY);
   }
@@ -106,7 +106,7 @@ class ApiService {
     return response;
   }
 
-  async logout() {
+  async logout(): Promise<void> {
     await this.clearTokens();
   }
 
@@ -114,14 +114,14 @@ class ApiService {
     return await this.makeRequest('/auth/profile');
   }
 
-  // Inventory APIs
+  // Inventory Management APIs
   async getInventory(params?: Record<string, any>) {
     const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
-    return await this.makeRequest(`/inventory/${queryString}`);
+    return await this.makeRequest(`/inventory${queryString}`);
   }
 
   async addInventoryItem(inventoryData: Record<string, any>) {
-    return await this.makeRequest('/inventory/', {
+    return await this.makeRequest('/inventory', {
       method: 'POST',
       body: JSON.stringify(inventoryData),
     });
@@ -148,24 +148,24 @@ class ApiService {
     return await this.makeRequest(`/inventory/expiring-soon?days=${days}`);
   }
 
-  // Medicine APIs
+  // Medicine Management APIs
   async searchMedicines(query: string) {
     return await this.makeRequest(`/medicines/search?q=${encodeURIComponent(query)}`);
   }
 
   async getMedicines(params?: Record<string, any>) {
     const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
-    return await this.makeRequest(`/medicines/${queryString}`);
+    return await this.makeRequest(`/medicines${queryString}`);
   }
 
   async getMedicine(medicineId: string) {
     return await this.makeRequest(`/medicines/${medicineId}`);
   }
 
-  // Prescription APIs
+  // Prescription Management APIs
   async getPrescriptions(params?: Record<string, any>) {
     const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
-    return await this.makeRequest(`/prescriptions/${queryString}`);
+    return await this.makeRequest(`/prescriptions${queryString}`);
   }
 
   async getPrescription(prescriptionId: string) {
@@ -179,9 +179,9 @@ class ApiService {
     });
   }
 
-  // Mock implementations for development
+  // Analytics and Dashboard APIs
   async getDashboardStats() {
-    // Return mock data for development
+    // Mock data for development - replace with actual API call in production
     return {
       totalMedicines: 1247,
       lowStockCount: 23,
@@ -193,8 +193,33 @@ class ApiService {
     };
   }
 
+  async getSalesReport(params: {
+    startDate: string;
+    endDate: string;
+    groupBy?: 'day' | 'week' | 'month';
+  }) {
+    return await this.makeRequest('/analytics/sales', {
+      method: 'POST',
+      body: JSON.stringify(params),
+    });
+  }
+
+  async getTopMedicines(period: 'week' | 'month' | 'year' = 'month') {
+    return await this.makeRequest(`/analytics/top-medicines?period=${period}`);
+  }
+
+  // Utility methods
   async healthCheck() {
-    return { status: 'healthy' };
+    return await this.makeRequest('/health');
+  }
+
+  async testConnection() {
+    try {
+      const result = await this.healthCheck();
+      return { success: true, data: result };
+    } catch (error) {
+      return { success: false, error: error };
+    }
   }
 }
 
