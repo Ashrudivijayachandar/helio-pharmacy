@@ -1,0 +1,63 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Build outputs
+build/
+dist/
+*.bundle
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# React Native specific
+mobile-app/android/app/build/
+mobile-app/ios/build/
+mobile-app/ios/Pods/
+mobile-app/.expo/
+
+# Python specific
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
+backend/.Python
+backend/venv/
+backend/.venv/
+backend/instance/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# Cache
+.cache/
+.tmp/
+
+# Coverage reports
+coverage/
+*.coverage
+
+# Package manager files
+package-lock.json
+yarn.lock
+
+# Metro bundler cache
+mobile-app/.metro-health-check*
