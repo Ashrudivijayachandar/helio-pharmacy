@@ -14,12 +14,8 @@ from flask_marshmallow import Marshmallow
 from datetime import datetime
 import traceback
 
-# Initialize extensions
-db = SQLAlchemy()
-migrate = Migrate()
-jwt = JWTManager()
-cors = CORS()
-ma = Marshmallow()
+# Import extensions
+from extensions import db, migrate, jwt, cors, ma
 
 def create_app(config_name=None):
     """Application factory pattern"""
@@ -184,6 +180,29 @@ def register_blueprints(app):
     app.register_blueprint(notification_bp, url_prefix='/api/notifications')
     app.register_blueprint(analytics_bp, url_prefix='/api/analytics')
     app.register_blueprint(translation_bp, url_prefix='/api/translation')
+    
+    # Root endpoint
+    @app.route('/')
+    def root():
+        return jsonify({
+            'message': 'Welcome to Helio Pharmacy Management System API',
+            'version': '1.0.0',
+            'status': 'running',
+            'endpoints': {
+                'health': '/api/health',
+                'docs': '/api/docs',
+                'auth': '/api/auth',
+                'pharmacy': '/api/pharmacy',
+                'medicines': '/api/medicines',
+                'inventory': '/api/inventory',
+                'patients': '/api/patients',
+                'prescriptions': '/api/prescriptions',
+                'rare_medicines': '/api/rare-medicines',
+                'notifications': '/api/notifications',
+                'analytics': '/api/analytics',
+                'translation': '/api/translation'
+            }
+        })
     
     # Health check endpoint
     @app.route('/api/health')

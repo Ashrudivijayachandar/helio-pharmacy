@@ -7,7 +7,7 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
     
     # Database Configuration
-    DATABASE_URL = os.environ.get('DATABASE_URL') or 'postgresql://postgres:password@localhost:5432/pharmacy_db'
+    DATABASE_URL = os.environ.get('DATABASE_URL') or 'postgresql://postgres:Ashrudi@localhost:5432/heliopharm'
     SQLALCHEMY_DATABASE_URI = DATABASE_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = {

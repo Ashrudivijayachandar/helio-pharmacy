@@ -9,7 +9,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from marshmallow import Schema, fields, ValidationError
 import re
 
-from app import db
+from extensions import db
 from models import Pharmacy
 
 auth_bp = Blueprint('auth', __name__)

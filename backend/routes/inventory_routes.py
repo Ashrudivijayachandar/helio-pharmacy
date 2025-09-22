@@ -9,7 +9,7 @@ from marshmallow import Schema, fields, ValidationError, validate
 from datetime import datetime, date
 from sqlalchemy import func, and_, or_
 
-from app import db
+from extensions import db
 from models import Inventory, Medicine, Pharmacy, Notification
 
 inventory_bp = Blueprint('inventory', __name__)
