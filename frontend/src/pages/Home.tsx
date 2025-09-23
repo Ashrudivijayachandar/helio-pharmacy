@@ -1,5 +1,5 @@
 ﻿/**
- * Home page - Welcome to Helio Medical Platform
+ * Home page - Pharmacy Dashboard Overview
  */
 
 import React from 'react';
@@ -9,53 +9,73 @@ import {
   Button,
   Card,
   CardContent,
-  TextField,
-  InputAdornment,
-  FormControl,
-  Select,
-  MenuItem,
-  Checkbox,
-  FormControlLabel,
-  Avatar,
   Container,
+  Stack,
 } from '@mui/material';
-import {
-  Search as SearchIcon,
-  FilterList as FilterIcon,
-  Person as PersonIcon,
-} from '@mui/icons-material';
+import { useAuth } from '../hooks/useAuth';
+import { useTranslation } from 'react-i18next';
 
 const Home: React.FC = () => {
+  const { logout } = useAuth();
+  const { t } = useTranslation();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
+  const quickStats = [
+    { label: t('availableMedicines') || 'Available Medicines', value: '1,250', color: '#4285f4' },
+    { label: t('lowStockItems') || 'Low Stock Items', value: '12', color: '#ea4335' },
+    { label: t('pendingOrders') || 'Pending Orders', value: '8', color: '#34a853' },
+    { label: t('expiringSoon') || 'Expiring Soon', value: '5', color: '#fbbc04' },
+  ];
+
+  const quickActions = [
+    { label: t('view_medicine_stock') || 'Medicine Stock', color: '#4285f4', href: '/medicine-stock' },
+    { label: t('prescription') || 'Prescriptions', color: '#34a853', href: '/prescriptions' },
+    { label: 'Rare Medicines', color: '#ea4335', href: '/rare-medicines' },
+    { label: t('about') || 'About', color: '#fbbc04', href: '/about' },
+  ];
+
   return (
     <Container maxWidth="lg" sx={{ py: 3, pb: 10 }}>
       {/* Header */}
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 4 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Box sx={{ 
-            width: 40, 
-            height: 40, 
-            borderRadius: '50%', 
-            backgroundColor: '#4285f4',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'white',
-            fontSize: '1.2rem',
-            fontWeight: 'bold'
-          }}>
-            H
-          </Box>
-          <Typography variant="h6" fontWeight={400} color="#202124">
-            Helio
+      <Box sx={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        mb: 4 
+      }}>
+        <Box>
+          <Typography 
+            variant="h4" 
+            component="h1" 
+            sx={{ 
+              fontWeight: 400,
+              color: '#202124',
+              mb: 1
+            }}
+          >
+            {t('welcome') || 'Welcome to Helio Pharmacy'}
+          </Typography>
+          <Typography 
+            variant="body1" 
+            sx={{ 
+              color: '#5f6368'
+            }}
+          >
+            {t('overview') || 'Pharmacy management dashboard for healthcare professionals'}
           </Typography>
         </Box>
-        <Button
-          variant="outlined"
-          color="error"
-          size="small"
+        <Button 
+          variant="outlined" 
+          onClick={handleLogout}
           sx={{ 
             textTransform: 'none',
-            fontSize: '0.875rem',
             borderColor: '#ea4335',
             color: '#ea4335',
             '&:hover': {
@@ -64,182 +84,175 @@ const Home: React.FC = () => {
             }
           }}
         >
-          Logout
+          {t('logout') || 'Logout'}
         </Button>
       </Box>
 
-      {/* Welcome Section */}
-      <Box sx={{ textAlign: 'center', mb: 6, py: 4 }}>
-        <Typography 
-          variant="h4" 
-          component="h1" 
-          fontWeight={400}
-          color="#202124"
-          mb={2}
-        >
-          Welcome to Helio
-        </Typography>
-        <Typography 
-          variant="body1" 
-          color="#5f6368"
-          mb={4}
-          sx={{ maxWidth: 600, mx: 'auto' }}
-        >
-          Connecting rural patients with doctors through telemedicine
-        </Typography>
-        
-        <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Button
-            variant="outlined"
-            sx={{
-              borderColor: '#dadce0',
-              color: '#5f6368',
-              textTransform: 'none',
-              px: 3,
-              py: 1,
+      {/* Quick Stats */}
+      <Typography 
+        variant="h6" 
+        sx={{ 
+          mb: 3, 
+          fontWeight: 400,
+          color: '#202124'
+        }}
+      >
+        {t('quickOverview') || 'Quick Overview'}
+      </Typography>
+      
+      <Stack 
+        direction={{ xs: 'column', sm: 'row' }} 
+        spacing={3} 
+        sx={{ mb: 4 }}
+      >
+        {quickStats.map((stat, index) => (
+          <Card 
+            key={index}
+            sx={{ 
+              flex: 1,
+              border: '1px solid #e8eaed',
+              borderRadius: 2,
+              transition: 'transform 0.2s ease-in-out',
               '&:hover': {
-                backgroundColor: '#f8f9fa',
-                borderColor: '#dadce0',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
               }
             }}
           >
-            Find Your Doctor
-          </Button>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: '#4285f4',
-              textTransform: 'none',
-              px: 3,
-              py: 1,
-              '&:hover': {
-                backgroundColor: '#3367d6',
-              }
-            }}
-          >
-            My Appointments
-          </Button>
-        </Box>
-      </Box>
-
-      {/* Find Your Doctor Section */}
-      <Card sx={{ mb: 4, border: '1px solid #e8eaed' }}>
-        <CardContent sx={{ p: 3 }}>
-          <Typography 
-            variant="h5" 
-            component="h2" 
-            fontWeight={400}
-            color="#202124"
-            mb={3}
-            textAlign="center"
-          >
-            Find Your Doctor
-          </Typography>
-          
-          <Box sx={{ mb: 3 }}>
-            <TextField
-              fullWidth
-              placeholder="Search doctors..."
-              variant="outlined"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon sx={{ color: '#5f6368' }} />
-                  </InputAdornment>
-                ),
-              }}
-              sx={{ mb: 2 }}
-            />
-            
-            <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-              <FormControl sx={{ minWidth: 200 }}>
-                <Select
-                  displayEmpty
-                  defaultValue=""
-                  size="medium"
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <FilterIcon sx={{ color: '#5f6368', fontSize: '1.2rem' }} />
-                    </InputAdornment>
-                  }
-                  sx={{
-                    '& .MuiSelect-select': {
-                      color: '#5f6368',
-                    }
-                  }}
-                >
-                  <MenuItem value="">All Specialties</MenuItem>
-                  <MenuItem value="cardiology">Cardiology</MenuItem>
-                  <MenuItem value="pediatrics">Pediatrics</MenuItem>
-                  <MenuItem value="general">General Medicine</MenuItem>
-                  <MenuItem value="gynecology">Gynecology</MenuItem>
-                </Select>
-              </FormControl>
-              
-              <FormControlLabel
-                control={
-                  <Checkbox 
-                    sx={{
-                      color: '#5f6368',
-                      '&.Mui-checked': {
-                        color: '#4285f4',
-                      }
-                    }}
-                  />
-                }
-                label={
-                  <Typography variant="body2" color="#5f6368">
-                    available only
-                  </Typography>
-                }
-              />
-            </Box>
-          </Box>
-
-          {/* Doctor Card Example */}
-          <Card sx={{ border: '1px solid #e8eaed', borderRadius: 2 }}>
-            <CardContent sx={{ p: 3 }}>
-              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                <Avatar
-                  sx={{
-                    width: 48,
-                    height: 48,
-                    backgroundColor: '#5f6368',
-                  }}
-                >
-                  <PersonIcon />
-                </Avatar>
-                <Box sx={{ flex: 1 }}>
-                  <Typography variant="h6" fontWeight={400} color="#202124" mb={0.5}>
-                    Dr. Rajesh Kumar
-                  </Typography>
-                  <Typography variant="body2" color="#5f6368" mb={0.5}>
-                    Cardiology
-                  </Typography>
-                  <Typography variant="body2" color="#5f6368" mb={1}>
-                    MBBS, MD Cardiology
-                  </Typography>
-                  <Box sx={{ 
-                    display: 'inline-flex', 
-                    alignItems: 'center', 
-                    backgroundColor: '#e6f4ea',
-                    color: '#137333',
-                    px: 2,
-                    py: 0.5,
-                    borderRadius: 1,
-                    fontSize: '0.75rem',
-                    fontWeight: 500,
-                    mb: 1
-                  }}>
-                    Available
-                  </Box>
-                  <Typography variant="body2" color="#5f6368">
-                    15 years experience
-                  </Typography>
-                </Box>
-              </Box>
+            <CardContent sx={{ textAlign: 'center', py: 4 }}>
+              <Typography 
+                variant="h3" 
+                component="div" 
+                sx={{ 
+                  fontWeight: 400, 
+                  color: stat.color,
+                  mb: 1 
+                }}
+              >
+                {stat.value}
+              </Typography>
+              <Typography 
+                variant="body1" 
+                sx={{ 
+                  fontWeight: 500,
+                  color: '#5f6368'
+                }}
+              >
+                {stat.label}
+              </Typography>
             </CardContent>
           </Card>
+        ))}
+      </Stack>
+
+      {/* Quick Actions */}
+      <Typography 
+        variant="h6" 
+        sx={{ 
+          mb: 3, 
+          fontWeight: 400,
+          color: '#202124'
+        }}
+      >
+        {t('quickActions') || 'Quick Actions'}
+      </Typography>
+      
+      <Stack 
+        direction={{ xs: 'column', sm: 'row' }} 
+        spacing={3}
+        sx={{ mb: 4 }}
+      >
+        {quickActions.map((action, index) => (
+          <Card 
+            key={index}
+            component="a"
+            href={action.href}
+            sx={{ 
+              flex: 1,
+              cursor: 'pointer',
+              textDecoration: 'none',
+              transition: 'all 0.2s ease-in-out',
+              border: '1px solid #e8eaed',
+              borderRadius: 2,
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                borderColor: action.color,
+              }
+            }}
+          >
+            <CardContent sx={{ textAlign: 'center', py: 4 }}>
+              <Typography 
+                variant="h6" 
+                sx={{ 
+                  fontWeight: 500,
+                  color: action.color,
+                }}
+              >
+                {action.label}
+              </Typography>
+            </CardContent>
+          </Card>
+        ))}
+      </Stack>
+
+      {/* Recent Activity */}
+      <Typography 
+        variant="h6" 
+        sx={{ 
+          mb: 3, 
+          fontWeight: 400,
+          color: '#202124'
+        }}
+      >
+        {t('recentActivity') || 'Recent Activity'}
+      </Typography>
+      
+      <Card sx={{ border: '1px solid #e8eaed', borderRadius: 2 }}>
+        <CardContent sx={{ p: 4 }}>
+          <Stack spacing={3}>
+            <Box sx={{ 
+              p: 3, 
+              backgroundColor: '#e8f5e8', 
+              borderRadius: 2,
+              border: '1px solid #34a853'
+            }}>
+              <Typography variant="body1" sx={{ fontWeight: 500, mb: 0.5, color: '#202124' }}>
+                {t('medicineAdded') || 'Medicine Added'}
+              </Typography>
+              <Typography variant="body2" sx={{ color: '#5f6368' }}>
+                {t('paracetamolAdded') || 'Paracetamol 500mg added to inventory'} - 2 {t('hoursAgo') || 'hours ago'}
+              </Typography>
+            </Box>
+            
+            <Box sx={{ 
+              p: 3, 
+              backgroundColor: '#fef7f0', 
+              borderRadius: 2,
+              border: '1px solid #fbbc04'
+            }}>
+              <Typography variant="body1" sx={{ fontWeight: 500, mb: 0.5, color: '#202124' }}>
+                {t('lowStockAlert') || 'Low Stock Alert'}
+              </Typography>
+              <Typography variant="body2" sx={{ color: '#5f6368' }}>
+                {t('amoxicillinLowStock') || 'Amoxicillin running low on stock'} - 4 {t('hoursAgo') || 'hours ago'}
+              </Typography>
+            </Box>
+            
+            <Box sx={{ 
+              p: 3, 
+              backgroundColor: '#e3f2fd', 
+              borderRadius: 2,
+              border: '1px solid #4285f4'
+            }}>
+              <Typography variant="body1" sx={{ fontWeight: 500, mb: 0.5, color: '#202124' }}>
+                {t('orderCompleted') || 'Order Completed'}
+              </Typography>
+              <Typography variant="body2" sx={{ color: '#5f6368' }}>
+                {t('orderFor50') || 'Order for 50 units of Aspirin completed'} - 6 {t('hoursAgo') || 'hours ago'}
+              </Typography>
+            </Box>
+          </Stack>
         </CardContent>
       </Card>
     </Container>
