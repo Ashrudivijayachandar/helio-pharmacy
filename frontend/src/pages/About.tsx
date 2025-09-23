@@ -12,273 +12,200 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Avatar,
   Container,
 } from '@mui/material';
 import {
-  LocalPharmacy as PharmacyIcon,
   Phone as PhoneIcon,
   Email as EmailIcon,
   LocationOn as LocationIcon,
   Schedule as ScheduleIcon,
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 const About: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
-    <Container maxWidth="md" sx={{ py: 3, pb: 10 }}>
+    <Box sx={{ 
+      backgroundColor: '#f8f9fa',
+      minHeight: '100vh',
+      pb: 10
+    }}>
       {/* Header */}
-      <Box sx={{ mb: 6, textAlign: 'center' }}>
-        <Avatar
-          sx={{
-            width: 80,
-            height: 80,
-            bgcolor: '#4285f4',
-            mx: 'auto',
-            mb: 3,
-            fontSize: '2rem'
-          }}
-        >
-          <PharmacyIcon fontSize="large" />
-        </Avatar>
+      <Box sx={{ 
+        backgroundColor: '#ffffff',
+        px: 4,
+        py: 4,
+        borderBottom: '1px solid #e1e4e8'
+      }}>
         <Typography 
           variant="h4" 
-          component="h1" 
-          gutterBottom 
+          component="h1"
           sx={{ 
-            color: '#202124',
-            fontWeight: 400,
-            letterSpacing: '-0.02em'
+            fontWeight: 600, 
+            color: '#24292e',
+            fontSize: '1.75rem',
+            mb: 1,
+            textAlign: 'center'
           }}
         >
-          About Helio Pharmacy
+          Helio Pharmacy
         </Typography>
         <Typography 
           variant="body1" 
-          color="#5f6368"
-          sx={{ maxWidth: 600, mx: 'auto' }}
+          sx={{ 
+            color: '#586069',
+            fontSize: '0.95rem',
+            textAlign: 'center',
+            maxWidth: 600,
+            mx: 'auto'
+          }}
         >
-          Your trusted healthcare partner, serving the community with quality medicines and professional care.
+          Your trusted healthcare partner providing quality pharmaceutical services and rare medicine access
         </Typography>
       </Box>
 
-      {/* Contact Information */}
-      <Card sx={{ mb: 4, border: '1px solid #e8eaed', borderRadius: 2 }}>
-        <CardContent sx={{ p: 4 }}>
-          <Typography 
-            variant="h5" 
-            component="h2" 
-            gutterBottom 
-            sx={{ 
-              color: '#202124',
-              fontWeight: 400,
-              mb: 3
-            }}
-          >
-            Contact Information
-          </Typography>
-          <List sx={{ '& .MuiListItem-root': { px: 0 } }}>
-            <ListItem>
-              <ListItemIcon>
-                <Box
-                  sx={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: '50%',
-                    backgroundColor: '#e8f5e8',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <PhoneIcon sx={{ color: '#137333' }} />
-                </Box>
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124' }}>
-                    Phone
-                  </Typography>
-                }
-                secondary={
-                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
-                    +91 98765 43210
-                  </Typography>
-                }
-              />
-            </ListItem>
+      {/* Main Content */}
+      <Container maxWidth="md" sx={{ px: 4, py: 4 }}>
+        {/* Contact Information Card */}
+        <Card sx={{ 
+          backgroundColor: '#ffffff',
+          border: '1px solid #e1e4e8',
+          borderRadius: '12px',
+          overflow: 'hidden',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+          mb: 3
+        }}>
+          <CardContent sx={{ p: 4 }}>
+            <Typography 
+              variant="h6" 
+              component="h2" 
+              sx={{ 
+                color: '#24292e',
+                fontWeight: 600,
+                fontSize: '1.25rem',
+                mb: 3
+              }}
+            >
+              Contact Information
+            </Typography>
             
-            <ListItem>
-              <ListItemIcon>
-                <Box
-                  sx={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: '50%',
-                    backgroundColor: '#e3f2fd',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <EmailIcon sx={{ color: '#1976d2' }} />
-                </Box>
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124' }}>
-                    Email
-                  </Typography>
-                }
-                secondary={
-                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
-                    contact@heliopharmacy.com
-                  </Typography>
-                }
-              />
-            </ListItem>
-            
-            <ListItem>
-              <ListItemIcon>
-                <Box
-                  sx={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: '50%',
-                    backgroundColor: '#fff3e0',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <LocationIcon sx={{ color: '#f57c00' }} />
-                </Box>
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124' }}>
-                    Address
-                  </Typography>
-                }
-                secondary={
-                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
-                    123 Healthcare Street, Medical District, City - 110001
-                  </Typography>
-                }
-              />
-            </ListItem>
-            
-            <ListItem>
-              <ListItemIcon>
-                <Box
-                  sx={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: '50%',
-                    backgroundColor: '#f3e5f5',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <ScheduleIcon sx={{ color: '#7b1fa2' }} />
-                </Box>
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124' }}>
-                    Hours
-                  </Typography>
-                }
-                secondary={
-                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
-                    24/7 - Always available for your healthcare needs
-                  </Typography>
-                }
-              />
-            </ListItem>
-          </List>
-        </CardContent>
-      </Card>
-
-      {/* Services */}
-      <Card sx={{ border: '1px solid #e8eaed', borderRadius: 2 }}>
-        <CardContent sx={{ p: 4 }}>
-          <Typography 
-            variant="h5" 
-            component="h2" 
-            gutterBottom 
-            sx={{ 
-              color: '#202124',
-              fontWeight: 400,
-              mb: 3
-            }}
-          >
-            Our Services
-          </Typography>
-          <List sx={{ '& .MuiListItem-root': { px: 0 } }}>
-            <ListItem>
-              <ListItemText
-                primary={
-                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124', mb: 0.5 }}>
-                    Prescription Medicines
-                  </Typography>
-                }
-                secondary={
-                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
-                    Complete range of prescription medications with proper consultation
-                  </Typography>
-                }
-              />
-            </ListItem>
-            
-            <ListItem>
-              <ListItemText
-                primary={
-                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124', mb: 0.5 }}>
-                    Rare Medicine Access
-                  </Typography>
-                }
-                secondary={
-                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
-                    Specialized medicines and rare drug procurement services
-                  </Typography>
-                }
-              />
-            </ListItem>
-            
-            <ListItem>
-              <ListItemText
-                primary={
-                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124', mb: 0.5 }}>
-                    Digital Health Records
-                  </Typography>
-                }
-                secondary={
-                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
-                    Secure digital storage of prescriptions and medical history
-                  </Typography>
-                }
-              />
-            </ListItem>
-            
-            <ListItem>
-              <ListItemText
-                primary={
-                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124', mb: 0.5 }}>
-                    Professional Consultation
-                  </Typography>
-                }
-                secondary={
-                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
-                    Expert pharmacist guidance and medication counseling
-                  </Typography>
-                }
-              />
-            </ListItem>
-          </List>
-        </CardContent>
-      </Card>
-    </Container>
+            <List sx={{ 
+              '& .MuiListItem-root': { 
+                px: 0,
+                py: 2,
+                borderBottom: '1px solid #f6f8fa',
+                '&:last-child': { borderBottom: 'none' }
+              }
+            }}>
+              <ListItem>
+                <ListItemIcon sx={{ minWidth: 56 }}>
+                  <PhoneIcon sx={{ color: '#1976d2', fontSize: '1.5rem' }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    <Typography variant="body1" sx={{ 
+                      fontWeight: 600, 
+                      color: '#24292e',
+                      fontSize: '1rem',
+                      mb: 0.5
+                    }}>
+                      +1 (555) 123-4567
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography variant="body2" sx={{ 
+                      color: '#586069',
+                      fontSize: '0.875rem'
+                    }}>
+                      +91 98765 43210
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              
+              <ListItem>
+                <ListItemIcon sx={{ minWidth: 56 }}>
+                  <EmailIcon sx={{ color: '#1976d2', fontSize: '1.5rem' }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    <Typography variant="body1" sx={{ 
+                      fontWeight: 600, 
+                      color: '#24292e',
+                      fontSize: '1rem',
+                      mb: 0.5
+                    }}>
+                      Email
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography variant="body2" sx={{ 
+                      color: '#586069',
+                      fontSize: '0.875rem'
+                    }}>
+                      contact@heliopharmacy.com
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              
+              <ListItem>
+                <ListItemIcon sx={{ minWidth: 56 }}>
+                  <LocationIcon sx={{ color: '#1976d2', fontSize: '1.5rem' }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    <Typography variant="body1" sx={{ 
+                      fontWeight: 600, 
+                      color: '#24292e',
+                      fontSize: '1rem',
+                      mb: 0.5
+                    }}>
+                      123 Healthcare Street, Medical District, City 12345
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography variant="body2" sx={{ 
+                      color: '#586069',
+                      fontSize: '0.875rem'
+                    }}>
+                      123 Healthcare Street, Medical District, City - 110001
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              
+              <ListItem>
+                <ListItemIcon sx={{ minWidth: 56 }}>
+                  <ScheduleIcon sx={{ color: '#1976d2', fontSize: '1.5rem' }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    <Typography variant="body1" sx={{ 
+                      fontWeight: 600, 
+                      color: '#24292e',
+                      fontSize: '1rem',
+                      mb: 0.5
+                    }}>
+                      Hours of Operation
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography variant="body2" sx={{ 
+                      color: '#586069',
+                      fontSize: '0.875rem'
+                    }}>
+                      Available 24/7
+                    </Typography>
+                  }
+                />
+              </ListItem>
+            </List>
+          </CardContent>
+        </Card>
+      </Container>
+    </Box>
   );
 };
 export default About;

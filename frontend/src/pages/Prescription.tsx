@@ -1,229 +1,374 @@
-/**
- * Prescription page - Manage and view prescriptions
- */
-
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Card,
   CardContent,
   Typography,
   Button,
-  Stack,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Chip,
-  Alert,
-  Divider,
+  Avatar,
+  Dialog,
+  DialogContent,
 } from '@mui/material';
 import {
-  Receipt as ReceiptIcon,
-  Search as SearchIcon,
+  Person as PersonIcon,
+  DateRange as DateIcon,
 } from '@mui/icons-material';
 
-interface Prescription {
+interface PrescriptionImage {
   id: number;
-  patient: string;
-  date: string;
-  doctor: string;
-  status: 'Pending' | 'Processing' | 'Ready' | 'Dispensed';
-  medicines: string[];
+  patientName: string;
+  uploadDate: string;
+  imageUrl: string;
+  fileName: string;
+  patientAge: number;
+  patientGender: string;
+  description: string;
 }
 
-// Mock prescriptions data
-const MOCK_PRESCRIPTIONS: Prescription[] = [
+const MOCK_PRESCRIPTION_IMAGES: PrescriptionImage[] = [
   {
     id: 1,
-    patient: 'John Doe',
-    date: '2024-12-20',
-    doctor: 'Dr. Smith',
-    status: 'Pending',
-    medicines: ['Paracetamol 500mg', 'Amoxicillin 250mg']
+    patientName: 'John Doe',
+    uploadDate: '2025-09-20',
+    imageUrl: 'https://via.placeholder.com/300x400/f8f9fa/6c757d?text=Prescription+1',
+    fileName: 'prescription_john_doe.jpg',
+    patientAge: 45,
+    patientGender: 'Male',
+    description: 'Prescription for diabetes medication'
   },
   {
     id: 2,
-    patient: 'Jane Smith',
-    date: '2024-12-19',
-    doctor: 'Dr. Johnson',
-    status: 'Processing',
-    medicines: ['Ibuprofen 400mg', 'Aspirin 100mg']
+    patientName: 'Priya Singh',
+    uploadDate: '2025-09-19',
+    imageUrl: 'https://via.placeholder.com/300x400/f8f9fa/6c757d?text=Prescription+2',
+    fileName: 'prescription_priya_singh.jpg',
+    patientAge: 32,
+    patientGender: 'Female',
+    description: 'Heart medication prescription'
   },
   {
     id: 3,
-    patient: 'Bob Wilson',
-    date: '2024-12-18',
-    doctor: 'Dr. Brown',
-    status: 'Ready',
-    medicines: ['Metformin 500mg', 'Lisinopril 10mg']
+    patientName: 'Amit Kumar',
+    uploadDate: '2025-09-18',
+    imageUrl: 'https://via.placeholder.com/300x400/f8f9fa/6c757d?text=Prescription+3',
+    fileName: 'prescription_amit_kumar.jpg',
+    patientAge: 28,
+    patientGender: 'Male',
+    description: 'Blood pressure medication refill'
   },
 ];
 
 const Prescription: React.FC = () => {
-  const navigate = useNavigate();
-  const [prescriptions, setPrescriptions] = useState<Prescription[]>([]);
+  const [prescriptionImages, setPrescriptionImages] = useState<PrescriptionImage[]>([]);
+  const [selectedPrescription, setSelectedPrescription] = useState<PrescriptionImage | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
-    // Load prescriptions (could be from API in real implementation)
-    setPrescriptions(MOCK_PRESCRIPTIONS);
+    setPrescriptionImages(MOCK_PRESCRIPTION_IMAGES);
   }, []);
 
-  const getStatusColor = (status: Prescription['status']) => {
-    switch (status) {
-      case 'Pending':
-        return 'warning';
-      case 'Processing':
-        return 'info';
-      case 'Ready':
-        return 'success';
-      case 'Dispensed':
-        return 'default';
-      default:
-        return 'default';
-    }
+  const handleViewPrescription = (prescription: PrescriptionImage) => {
+    setSelectedPrescription(prescription);
+    setDialogOpen(true);
   };
 
-  const handleViewPrescriptions = () => {
-    navigate('/prescriptions');
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+    setSelectedPrescription(null);
   };
 
   return (
-    <Box sx={{ flexGrow: 1, p: 3 }}>
-      {/* Header */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Prescription Management
+    <Box sx={{ 
+      backgroundColor: '#f8f9fa',
+      minHeight: '100vh',
+      pb: 10
+    }}>
+      <Box sx={{ 
+        backgroundColor: '#ffffff',
+        px: 4,
+        py: 3,
+        borderBottom: '1px solid #e1e4e8'
+      }}>
+        <Typography 
+          variant="h4" 
+          component="h1"
+          sx={{ 
+            fontWeight: 600, 
+            color: '#24292e',
+            fontSize: '1.75rem',
+            mb: 1
+          }}
+        >
+          Prescription Images
         </Typography>
-        <Typography variant="body1" color="textSecondary">
-          View and manage prescription orders
+        <Typography 
+          variant="body1" 
+          sx={{ 
+            color: '#586069',
+            fontSize: '0.95rem'
+          }}
+        >
+          View uploaded prescription images from patients
         </Typography>
       </Box>
 
-      {/* Quick Stats */}
-      <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ mb: 3 }}>
-        <Card sx={{ flex: 1 }}>
-          <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              Pending Prescriptions
-            </Typography>
-            <Typography variant="h4">
-              {prescriptions.filter(p => p.status === 'Pending').length}
-            </Typography>
-          </CardContent>
-        </Card>
-        <Card sx={{ flex: 1 }}>
-          <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              Processing
-            </Typography>
-            <Typography variant="h4">
-              {prescriptions.filter(p => p.status === 'Processing').length}
-            </Typography>
-          </CardContent>
-        </Card>
-        <Card sx={{ flex: 1 }}>
-          <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              Ready for Pickup
-            </Typography>
-            <Typography variant="h4">
-              {prescriptions.filter(p => p.status === 'Ready').length}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Stack>
-
-      {/* Recent Prescriptions */}
-      <Card>
-        <CardContent>
-          <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-            <Typography variant="h6">
-              Recent Prescriptions
-            </Typography>
-            <Button
-              variant="outlined"
-              startIcon={<SearchIcon />}
-              onClick={handleViewPrescriptions}
+      <Box sx={{ px: 4, py: 3 }}>
+        <Box sx={{ 
+          display: 'grid', 
+          gridTemplateColumns: { 
+            xs: '1fr', 
+            sm: 'repeat(2, 1fr)', 
+            md: 'repeat(3, 1fr)', 
+            lg: 'repeat(4, 1fr)' 
+          },
+          gap: 3
+        }}>
+          {prescriptionImages.map((prescription) => (
+            <Card
+              key={prescription.id}
+              sx={{
+                backgroundColor: '#ffffff',
+                border: '1px solid #e1e4e8',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              }}
             >
-              View All Prescriptions
-            </Button>
-          </Stack>
-          
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell><strong>Patient</strong></TableCell>
-                  <TableCell><strong>Doctor</strong></TableCell>
-                  <TableCell><strong>Date</strong></TableCell>
-                  <TableCell><strong>Medicines</strong></TableCell>
-                  <TableCell align="center"><strong>Status</strong></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {prescriptions.slice(0, 5).map((prescription) => (
-                  <TableRow key={prescription.id}>
-                    <TableCell>
-                      <Typography variant="body1" fontWeight="medium">
-                        {prescription.patient}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>{prescription.doctor}</TableCell>
-                    <TableCell>{prescription.date}</TableCell>
-                    <TableCell>
-                      <Typography variant="body2" color="textSecondary">
-                        {prescription.medicines.join(', ')}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Chip
-                        label={prescription.status}
-                        color={getStatusColor(prescription.status)}
-                        size="small"
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+              <CardContent sx={{ p: 3, textAlign: 'center' }}>
+                <Avatar
+                  sx={{
+                    width: 60,
+                    height: 60,
+                    bgcolor: '#f6f8fa',
+                    color: '#586069',
+                    mx: 'auto',
+                    mb: 2,
+                    fontSize: '1.5rem'
+                  }}
+                >
+                  <PersonIcon />
+                </Avatar>
 
-          {prescriptions.length === 0 && (
-            <Alert severity="info" sx={{ mt: 2 }}>
-              No prescriptions found. New prescriptions will appear here.
-            </Alert>
+                <Typography 
+                  variant="h6" 
+                  sx={{ 
+                    fontWeight: 600,
+                    color: '#24292e',
+                    fontSize: '1.1rem',
+                    mb: 1
+                  }}
+                >
+                  {prescription.patientName}
+                </Typography>
+
+                <Box sx={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  gap: 0.5,
+                  mb: 3
+                }}>
+                  <DateIcon sx={{ fontSize: '1rem', color: '#586069' }} />
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: '#586069',
+                      fontSize: '0.8rem'
+                    }}
+                  >
+                    {prescription.uploadDate}
+                  </Typography>
+                </Box>
+
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: '#28a745',
+                    color: '#ffffff',
+                    borderRadius: '6px',
+                    textTransform: 'none',
+                    fontWeight: 500,
+                    fontSize: '0.9rem',
+                    px: 2.5,
+                    py: 1.2,
+                    minWidth: 110,
+                    boxShadow: 'none',
+                    border: '1px solid #28a745',
+                    '&:active': {
+                      transform: 'translateY(1px)',
+                    }
+                  }}
+                  onClick={() => handleViewPrescription(prescription)}
+                >
+                  View Prescription
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </Box>
+      </Box>
+
+      {/* Prescription View Dialog */}
+      <Dialog
+        open={dialogOpen}
+        onClose={handleCloseDialog}
+        maxWidth="lg"
+        fullWidth
+        sx={{
+          '& .MuiDialog-paper': {
+            borderRadius: '8px',
+            maxHeight: '95vh',
+            backgroundColor: '#ffffff',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)'
+          }
+        }}
+      >
+        <DialogContent sx={{ p: 4, backgroundColor: '#ffffff' }}>
+          {selectedPrescription && (
+            <Box>
+              {/* Header Section */}
+              <Box sx={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'flex-start',
+                mb: 3,
+                pb: 2,
+                borderBottom: '1px solid #f1f3f4'
+              }}>
+                <Box>
+                  <Typography 
+                    variant="h5" 
+                    sx={{ 
+                      fontWeight: 600, 
+                      color: '#24292e',
+                      fontSize: '1.5rem',
+                      mb: 0.5
+                    }}
+                  >
+                    {selectedPrescription.patientName}
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: '#6a737d',
+                      fontSize: '0.9rem'
+                    }}
+                  >
+                    Patient ID: PAT-{selectedPrescription.id.toString().padStart(3, '0')} • Contact: +91-9876543210
+                  </Typography>
+                </Box>
+                <Button
+                  onClick={handleCloseDialog}
+                  sx={{
+                    color: '#0969da',
+                    fontSize: '0.9rem',
+                    textTransform: 'none',
+                    fontWeight: 500,
+                    minWidth: 'auto',
+                    px: 2,
+                    py: 1,
+                    '&:hover': {
+                      backgroundColor: '#f6f8fa',
+                    }
+                  }}
+                >
+                  Close
+                </Button>
+              </Box>
+
+              {/* Prescription Image Section */}
+              <Box sx={{ mb: 3 }}>
+                <Box sx={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: 1, 
+                  mb: 2 
+                }}>
+                  <Box sx={{
+                    backgroundColor: '#dbeafe',
+                    color: '#1e40af',
+                    px: 1.5,
+                    py: 0.5,
+                    borderRadius: '4px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    textTransform: 'uppercase'
+                  }}>
+                    IMAGE
+                  </Box>
+                  <Typography 
+                    variant="h6" 
+                    sx={{ 
+                      fontWeight: 600, 
+                      color: '#24292e',
+                      fontSize: '1.1rem'
+                    }}
+                  >
+                    Prescription Image
+                  </Typography>
+                </Box>
+
+                <Box sx={{
+                  border: '2px dashed #d1d5da',
+                  borderRadius: '8px',
+                  p: 4,
+                  textAlign: 'center',
+                  backgroundColor: '#f8f9fa',
+                  minHeight: '400px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <Box sx={{ mb: 2 }}>
+                    <Typography sx={{ fontSize: '2rem' }}>📄</Typography>
+                  </Box>
+                  <Typography 
+                    variant="body1" 
+                    sx={{ 
+                      fontWeight: 600, 
+                      color: '#24292e',
+                      mb: 1
+                    }}
+                  >
+                    Prescription Image
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: '#6a737d',
+                      fontSize: '0.85rem',
+                      mb: 1
+                    }}
+                  >
+                    /images/prescriptions/{selectedPrescription.fileName}
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: '#6a737d',
+                      fontSize: '0.85rem'
+                    }}
+                  >
+                    Prescription image for heart medication
+                  </Typography>
+                </Box>
+
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: '#6a737d',
+                    fontSize: '0.85rem',
+                    mt: 1
+                  }}
+                >
+                  <strong>Quantity:</strong> 1
+                </Typography>
+              </Box>
+            </Box>
           )}
-        </CardContent>
-      </Card>
-
-      {/* Quick Actions */}
-      <Card sx={{ mt: 3 }}>
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
-            Quick Actions
-          </Typography>
-          <Stack direction="row" spacing={2}>
-            <Button
-              variant="contained"
-              startIcon={<ReceiptIcon />}
-              onClick={handleViewPrescriptions}
-            >
-              View All Prescriptions
-            </Button>
-            <Button
-              variant="outlined"
-              onClick={() => navigate('/medicine-stock')}
-            >
-              Check Medicine Stock
-            </Button>
-          </Stack>
-        </CardContent>
-      </Card>
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };

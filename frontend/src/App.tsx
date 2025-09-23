@@ -11,7 +11,7 @@ import { CssBaseline } from '@mui/material';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import MedicineStock from './pages/MedicineStock';
-import PrescriptionList from './screens/PrescriptionList';
+import Prescription from './pages/Prescription';
 import RareMedicines from './pages/RareMedicines';
 import About from './pages/About';
 
@@ -321,7 +321,7 @@ const App: React.FC = () => {
               element={
                 <ProtectedRoute>
                   <Layout>
-                    <PrescriptionList />
+                    <Prescription />
                   </Layout>
                 </ProtectedRoute>
               }

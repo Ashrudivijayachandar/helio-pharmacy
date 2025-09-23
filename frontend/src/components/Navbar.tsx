@@ -7,33 +7,21 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  IconButton,
+  Button,
   Box,
-  Menu,
-  MenuItem,
 } from '@mui/material';
 import {
-  Notifications as NotificationsIcon,
-  AccountCircle,
+  Logout as LogoutIcon,
+  FavoriteBorder as HeartIcon,
 } from '@mui/icons-material';
 import { useAuth } from '../hooks/useAuth';
 import LanguageSwitcher from './LanguageSwitcher';
 
 const Navbar: React.FC = () => {
-  const { user, logout } = useAuth();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const { logout } = useAuth();
 
   const handleLogout = () => {
     logout();
-    handleClose();
   };
 
   return (
@@ -41,112 +29,67 @@ const Navbar: React.FC = () => {
       position="fixed" 
       sx={{ 
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        bgcolor: '#1976d2',
-        color: 'white',
-        boxShadow: '0px 2px 8px rgba(25, 118, 210, 0.2)',
+        bgcolor: '#ffffff',
+        color: '#24292e',
+        boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.1)',
+        borderBottom: '1px solid #e1e4e8',
       }}
       elevation={0}
     >
-      <Toolbar sx={{ px: { xs: 2, md: 4 } }}>
-        <Typography 
-          variant="h6" 
-          noWrap 
-          component="div" 
-          sx={{ 
-            flexGrow: 1,
-            fontWeight: 700,
-            fontSize: { xs: '1.125rem', md: '1.25rem' },
-            color: 'white',
-          }}
-        >
-          Helio Pharmacy Management
-        </Typography>
-        <LanguageSwitcher />
+      <Toolbar sx={{ px: { xs: 2, md: 4 }, minHeight: '64px !important' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <IconButton 
-            color="inherit"
+          <Box
             sx={{
+              width: 32,
+              height: 32,
+              borderRadius: '50%',
+              backgroundColor: '#1976d2',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               color: 'white',
-              '&:hover': {
-                bgcolor: 'rgba(255, 255, 255, 0.1)',
-              },
             }}
           >
-            <NotificationsIcon />
-          </IconButton>
-
-          <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenu}
-            color="inherit"
+            <HeartIcon sx={{ fontSize: '1.125rem' }} />
+          </Box>
+          <Typography 
+            variant="h6" 
+            component="div" 
+            sx={{ 
+              fontWeight: 600,
+              fontSize: '1.25rem',
+              color: '#24292e',
+            }}
+          >
+            Helio
+          </Typography>
+        </Box>
+        
+        <Box sx={{ flexGrow: 1 }} />
+        
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <LanguageSwitcher />
+          <Button
+            onClick={handleLogout}
+            startIcon={<LogoutIcon />}
+            variant="outlined"
             sx={{
-              color: 'white',
+              color: '#d73a49',
+              borderColor: '#d73a49',
+              textTransform: 'none',
+              fontWeight: 500,
+              fontSize: '0.875rem',
+              px: 2,
+              py: 0.75,
+              borderRadius: '6px',
               '&:hover': {
-                bgcolor: 'rgba(255, 255, 255, 0.1)',
+                backgroundColor: '#ffeaea',
+                borderColor: '#d73a49',
               },
             }}
           >
-            <AccountCircle />
-          </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            sx={{
-              '& .MuiPaper-root': {
-                borderRadius: 2,
-                mt: 1,
-                boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
-                border: '1px solid',
-                borderColor: 'divider',
-              },
-            }}
-          >
-            <MenuItem 
-              onClick={handleClose}
-              sx={{ 
-                px: 3, 
-                py: 1.5,
-                fontWeight: 500,
-              }}
-            >
-              Profile
-            </MenuItem>
-            <MenuItem 
-              onClick={handleClose}
-              sx={{ 
-                px: 3, 
-                py: 1.5,
-                fontWeight: 500,
-              }}
-            >
-              Settings
-            </MenuItem>
-            <MenuItem 
-              onClick={handleLogout}
-              sx={{ 
-                px: 3, 
-                py: 1.5,
-                fontWeight: 500,
-                color: 'error.main',
-              }}
-            >
-              Logout
-            </MenuItem>
-          </Menu>
+            Logout
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>

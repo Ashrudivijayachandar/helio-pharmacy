@@ -14,10 +14,12 @@ import {
   MedicalServices as RareMedicineIcon,
   Info as InfoIcon,
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 const BottomNav: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -108,7 +110,7 @@ const BottomNav: React.FC = () => {
         }}
       >
         <BottomNavigationAction
-          label="Home"
+          label={t('home')}
           icon={<HomeIcon />}
           sx={{
             '& .MuiSvgIcon-root': {
@@ -118,7 +120,7 @@ const BottomNav: React.FC = () => {
           }}
         />
         <BottomNavigationAction
-          label="Medicines"
+          label={t('medicine_stock')}
           icon={<PharmacyIcon />}
           sx={{
             '& .MuiSvgIcon-root': {
@@ -128,7 +130,7 @@ const BottomNav: React.FC = () => {
           }}
         />
         <BottomNavigationAction
-          label="Availability"
+          label={t('prescription')}
           icon={<ReceiptIcon />}
           sx={{
             '& .MuiSvgIcon-root': {
@@ -138,7 +140,7 @@ const BottomNav: React.FC = () => {
           }}
         />
         <BottomNavigationAction
-          label="Profile"
+          label={t('rare_medicines')}
           icon={<RareMedicineIcon />}
           sx={{
             '& .MuiSvgIcon-root': {
@@ -148,7 +150,7 @@ const BottomNav: React.FC = () => {
           }}
         />
         <BottomNavigationAction
-          label="Settings"
+          label={t('about')}
           icon={<InfoIcon />}
           sx={{
             '& .MuiSvgIcon-root': {

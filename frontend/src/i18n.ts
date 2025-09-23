@@ -12,11 +12,17 @@ i18n
       hi: { translation: hi },
       pa: { translation: pa },
     },
-    lng: 'en',
+    lng: localStorage.getItem('language') || 'en',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
     },
+    debug: process.env.NODE_ENV === 'development',
   });
+
+// Save language to localStorage when it changes
+i18n.on('languageChanged', (lng) => {
+  localStorage.setItem('language', lng);
+});
 
 export default i18n;

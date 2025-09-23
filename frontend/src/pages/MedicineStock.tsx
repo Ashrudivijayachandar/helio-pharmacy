@@ -20,7 +20,6 @@ import {
   InputAdornment,
   Chip,
   Stack,
-  Alert,
   Button,
   IconButton,
   Dialog,
@@ -36,8 +35,6 @@ import {
 } from '@mui/material';
 import {
   Search as SearchIcon,
-  Warning as WarningIcon,
-  Error as ErrorIcon,
   Edit as EditIcon,
   Save as SaveIcon,
   Cancel as CancelIcon,
@@ -229,312 +226,525 @@ const MedicineStock: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 3, pb: 10 }}>
+    <Box sx={{ 
+      backgroundColor: '#f8f9fa',
+      minHeight: '100vh',
+      pb: 10
+    }}>
       {/* Header */}
-      <Box sx={{ mb: 4 }}>
+      <Box sx={{ 
+        backgroundColor: '#ffffff',
+        px: 4,
+        py: 3,
+        borderBottom: '1px solid #e1e4e8'
+      }}>
         <Typography 
           variant="h4" 
           component="h1"
-          gutterBottom 
           sx={{ 
-            fontWeight: 400, 
-            color: '#202124',
+            fontWeight: 600, 
+            color: '#24292e',
+            fontSize: '1.75rem',
             mb: 1
           }}
         >
-          {t('medicine_inventory_management') || 'Medicine Inventory'}
+          Medicines Inventory
         </Typography>
         <Typography 
           variant="body1" 
           sx={{ 
-            color: '#5f6368',
-            maxWidth: 600
+            color: '#586069',
+            fontSize: '0.95rem'
           }}
         >
-          {t('government_pharmacy_pharmacist_access') || 'Manage and track medicine stock levels with real-time updates'}
+          Real-time medicine stock and availability
         </Typography>
       </Box>
 
-      <Stack spacing={3}>
-        {/* Controls */}
-        <Card sx={{ border: '1px solid #e8eaed', borderRadius: 2 }}>
-          <CardContent sx={{ p: 3 }}>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="center">
-              <TextField
-                placeholder={t('search_medicines') || 'Search medicines...'}
-                variant="outlined"
-                size="medium"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                sx={{ 
-                  flexGrow: 1,
-                  '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
-                      borderColor: '#dadce0',
-                    },
-                    '&:hover fieldset': {
-                      borderColor: '#4285f4',
-                    },
-                  }
-                }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon sx={{ color: '#5f6368' }} />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <Button
-                variant="contained"
-                startIcon={<AddIcon />}
-                onClick={() => setAddDialogOpen(true)}
-                sx={{ 
-                  minWidth: 180,
-                  backgroundColor: '#4285f4',
-                  textTransform: 'none',
-                  '&:hover': {
-                    backgroundColor: '#3367d6',
-                  }
-                }}
-              >
-                {t('add_new_medicine') || 'Add Medicine'}
-              </Button>
-            </Stack>
-          </CardContent>
-        </Card>
-
-        {/* Alerts */}
-        {stats.lowStock > 0 && (
-          <Alert 
-            severity="warning" 
-            icon={<WarningIcon />}
-            sx={{
-              border: '1px solid #fdd835',
-              borderRadius: 2,
-              backgroundColor: '#fffbf0',
-            }}
-          >
-            <strong>{stats.lowStock} {t('medicines') || 'medicines'}</strong> {t('running_low_stock') || 'running low on stock'}
-          </Alert>
-        )}
-        
-        {stats.outOfStock > 0 && (
-          <Alert 
-            severity="error" 
-            icon={<ErrorIcon />}
-            sx={{
-              border: '1px solid #f44336',
-              borderRadius: 2,
-              backgroundColor: '#fef7f7',
-            }}
-          >
-            <strong>{stats.outOfStock} {t('medicines') || 'medicines'}</strong> {t('out_of_stock_alert') || 'are out of stock'}
-          </Alert>
-        )}
-
-        {/* Medicine Table */}
-        <Card sx={{ border: '1px solid #e8eaed', borderRadius: 2 }}>
-          <CardContent sx={{ p: 0 }}>
-            <Box sx={{ p: 3, borderBottom: '1px solid #e8eaed' }}>
-              <Typography 
-                variant="h6" 
-                sx={{ 
-                  fontWeight: 400, 
-                  color: '#202124' 
-                }}
-              >
-                {t('medicine_inventory') || 'Medicine Inventory'} ({filteredMedicines.length} {t('items') || 'items'})
-              </Typography>
-            </Box>
-            <TableContainer 
-              component={Paper} 
+      {/* Main Content */}
+      <Box sx={{ px: 4, py: 3 }}>
+        {/* Search Section */}
+        <Box sx={{ 
+          backgroundColor: '#ffffff',
+          borderRadius: '6px',
+          border: '1px solid #e1e4e8',
+          p: 3,
+          mb: 3
+        }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Typography 
+              variant="h6" 
               sx={{ 
-                boxShadow: 'none',
-                border: 'none'
+                fontWeight: 500,
+                color: '#24292e',
+                fontSize: '1rem'
               }}
             >
-              <Table sx={{ minWidth: 650 }}>
-                <TableHead>
-                  <TableRow sx={{ 
-                    backgroundColor: '#f8f9fa',
-                    '& .MuiTableCell-head': {
-                      borderBottom: '1px solid #e8eaed',
-                      color: '#5f6368',
-                      fontWeight: 500,
-                      fontSize: '0.875rem',
-                    }
+              Search medicines
+            </Typography>
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              onClick={() => setAddDialogOpen(true)}
+              sx={{
+                backgroundColor: '#28a745',
+                color: '#ffffff',
+                textTransform: 'none',
+                fontWeight: 500,
+                borderRadius: '6px',
+                '&:hover': {
+                  backgroundColor: '#218838',
+                },
+              }}
+            >
+              Add Medicine
+            </Button>
+          </Box>
+          <TextField
+            placeholder="Search medicines..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            variant="outlined"
+            fullWidth
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: '#f6f8fa',
+                borderRadius: '6px',
+                border: '1px solid #e1e4e8',
+                fontSize: '0.9rem',
+                '& fieldset': {
+                  border: 'none',
+                },
+                '&:hover': {
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #0366d6',
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #0366d6',
+                  boxShadow: '0 0 0 3px rgba(3, 102, 214, 0.3)',
+                }
+              },
+              '& .MuiInputBase-input': {
+                padding: '8px 12px',
+                color: '#24292e',
+                '&::placeholder': {
+                  color: '#6a737d',
+                  opacity: 1,
+                }
+              }
+            }}
+          />
+        </Box>
+
+        {/* Medicine Table */}
+        <Box sx={{ 
+          backgroundColor: '#ffffff',
+          borderRadius: '6px',
+          border: '1px solid #e1e4e8',
+          overflow: 'hidden'
+        }}>
+          <Table>
+            <TableHead>
+              <TableRow sx={{ backgroundColor: '#f6f8fa' }}>
+                <TableCell sx={{ 
+                  fontWeight: 600,
+                  color: '#24292e',
+                  fontSize: '0.85rem',
+                  padding: '12px 16px',
+                  borderBottom: '1px solid #e1e4e8'
+                }}>
+                  Medicine Name
+                </TableCell>
+                <TableCell sx={{ 
+                  fontWeight: 600,
+                  color: '#24292e',
+                  fontSize: '0.85rem',
+                  padding: '12px 16px',
+                  borderBottom: '1px solid #e1e4e8'
+                }}>
+                  ID
+                </TableCell>
+                <TableCell sx={{ 
+                  fontWeight: 600,
+                  color: '#24292e',
+                  fontSize: '0.85rem',
+                  padding: '12px 16px',
+                  borderBottom: '1px solid #e1e4e8'
+                }}>
+                  Stock
+                </TableCell>
+                <TableCell sx={{ 
+                  fontWeight: 600,
+                  color: '#24292e',
+                  fontSize: '0.85rem',
+                  padding: '12px 16px',
+                  borderBottom: '1px solid #e1e4e8'
+                }}>
+                  Expiry
+                </TableCell>
+                <TableCell sx={{ 
+                  fontWeight: 600,
+                  color: '#24292e',
+                  fontSize: '0.85rem',
+                  padding: '12px 16px',
+                  borderBottom: '1px solid #e1e4e8'
+                }}>
+                  Actions
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredMedicines.map((medicine, index) => (
+                <TableRow 
+                  key={medicine.id}
+                  sx={{ 
+                    '&:hover': { 
+                      backgroundColor: '#f6f8fa' 
+                    },
+                    borderBottom: index < filteredMedicines.length - 1 ? '1px solid #e1e4e8' : 'none'
+                  }}
+                >
+                  <TableCell sx={{ 
+                    padding: '12px 16px',
+                    borderBottom: 'none'
                   }}>
-                    <TableCell>{t('medicine_name') || 'Medicine Name'}</TableCell>
-                    <TableCell align="center">{t('stock_qty') || 'Stock Quantity'}</TableCell>
-                    <TableCell align="center">{t('expiry_date') || 'Expiry Date'}</TableCell>
-                    <TableCell align="center">{t('status') || 'Status'}</TableCell>
-                    <TableCell align="center">{t('actions') || 'Actions'}</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {filteredMedicines.map((medicine) => (
-                    <TableRow key={medicine.id} hover>
-                      <TableCell>
-                        {editingId === medicine.id ? (
-                          <TextField
-                            value={editForm.name || ''}
-                            onChange={(e) => setEditForm(prev => ({ ...prev, name: e.target.value }))}
-                            size="small"
-                            variant="outlined"
-                          />
-                        ) : (
-                          <Box>
-                            <Typography variant="body2" fontWeight="medium">
-                              {medicine.name}
-                            </Typography>
-                            <Typography variant="caption" color="textSecondary">
-                              {medicine.description}
-                            </Typography>
-                          </Box>
-                        )}
-                      </TableCell>
-                      
-                      <TableCell align="center">
-                        {editingId === medicine.id ? (
-                          <TextField
-                            type="number"
-                            value={editForm.stock || 0}
-                            onChange={(e) => setEditForm(prev => ({ ...prev, stock: Number(e.target.value) }))}
-                            size="small"
-                            variant="outlined"
-                            inputProps={{ min: 0 }}
-                            sx={{ width: 80 }}
-                          />
-                        ) : (
-                          <Typography 
-                            variant="body2" 
-                            fontWeight="bold"
-                            color={medicine.stock === 0 ? 'error.main' : medicine.stock <= 30 ? 'warning.main' : 'text.primary'}
-                          >
-                            {medicine.stock}
-                          </Typography>
-                        )}
-                      </TableCell>
-                      
-                      <TableCell align="center">
-                        {editingId === medicine.id ? (
-                          <TextField
-                            type="date"
-                            value={editForm.expiryDate || ''}
-                            onChange={(e) => setEditForm(prev => ({ ...prev, expiryDate: e.target.value }))}
-                            size="small"
-                            variant="outlined"
-                            InputLabelProps={{ shrink: true }}
-                          />
-                        ) : (
-                          <Box>
-                            <Typography variant="body2">
-                              {new Date(medicine.expiryDate).toLocaleDateString()}
-                            </Typography>
-                            {new Date(medicine.expiryDate) < new Date(Date.now() + 90 * 24 * 60 * 60 * 1000) && (
-                              <Typography variant="caption" color="warning.main">
-                                {t('expires_soon')}
-                              </Typography>
-                            )}
-                          </Box>
-                        )}
-                      </TableCell>
-                      
-                      <TableCell align="center">
-                        <Chip
-                          label={medicine.status.replace('-', ' ').toUpperCase()}
-                          color={getStatusColor(medicine.status) as any}
+                    {editingId === medicine.id ? (
+                      <TextField
+                        value={editForm.name || medicine.name}
+                        onChange={(e) => setEditForm(prev => ({ ...prev, name: e.target.value }))}
+                        size="small"
+                        fullWidth
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            backgroundColor: '#f6f8fa',
+                            borderRadius: '4px',
+                            fontSize: '0.9rem',
+                            '& fieldset': {
+                              border: '1px solid #e1e4e8',
+                            },
+                            '&:hover fieldset': {
+                              borderColor: '#0366d6',
+                            },
+                            '&.Mui-focused fieldset': {
+                              borderColor: '#0366d6',
+                            }
+                          }
+                        }}
+                      />
+                    ) : (
+                      <Typography 
+                        sx={{ 
+                          color: '#0366d6',
+                          fontSize: '0.9rem',
+                          fontWeight: 500
+                        }}
+                      >
+                        {medicine.name}
+                      </Typography>
+                    )}
+                  </TableCell>
+                  <TableCell sx={{ 
+                    color: '#586069',
+                    fontSize: '0.85rem',
+                    padding: '12px 16px',
+                    borderBottom: 'none'
+                  }}>
+                    Ph{medicine.id.toString().padStart(2, '0')}
+                  </TableCell>
+                  <TableCell sx={{ 
+                    padding: '12px 16px',
+                    borderBottom: 'none'
+                  }}>
+                    {editingId === medicine.id ? (
+                      <TextField
+                        type="number"
+                        value={editForm.stock ?? medicine.stock}
+                        onChange={(e) => setEditForm(prev => ({ ...prev, stock: parseInt(e.target.value) || 0 }))}
+                        size="small"
+                        inputProps={{ min: 0 }}
+                        sx={{
+                          width: '100px',
+                          '& .MuiOutlinedInput-root': {
+                            backgroundColor: '#f6f8fa',
+                            borderRadius: '4px',
+                            fontSize: '0.85rem',
+                            '& fieldset': {
+                              border: '1px solid #e1e4e8',
+                            },
+                            '&:hover fieldset': {
+                              borderColor: '#0366d6',
+                            },
+                            '&.Mui-focused fieldset': {
+                              borderColor: '#0366d6',
+                            }
+                          }
+                        }}
+                      />
+                    ) : (
+                      <Typography 
+                        sx={{ 
+                          color: medicine.status === 'in-stock' ? '#28a745' : 
+                                 medicine.status === 'low-stock' ? '#28a745' : '#dc3545',
+                          fontSize: '0.85rem',
+                          fontWeight: 500
+                        }}
+                      >
+                        {medicine.status === 'out-of-stock' ? 'Out of Stock' : 'In Stock'}
+                      </Typography>
+                    )}
+                  </TableCell>
+                  <TableCell sx={{ 
+                    padding: '12px 16px',
+                    borderBottom: 'none'
+                  }}>
+                    {editingId === medicine.id ? (
+                      <TextField
+                        type="date"
+                        value={editForm.expiryDate || medicine.expiryDate}
+                        onChange={(e) => setEditForm(prev => ({ ...prev, expiryDate: e.target.value }))}
+                        size="small"
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            backgroundColor: '#f6f8fa',
+                            borderRadius: '4px',
+                            fontSize: '0.85rem',
+                            '& fieldset': {
+                              border: '1px solid #e1e4e8',
+                            },
+                            '&:hover fieldset': {
+                              borderColor: '#0366d6',
+                            },
+                            '&.Mui-focused fieldset': {
+                              borderColor: '#0366d6',
+                            }
+                          }
+                        }}
+                      />
+                    ) : (
+                      <Typography sx={{ 
+                        color: '#586069',
+                        fontSize: '0.85rem'
+                      }}>
+                        {new Date(medicine.expiryDate).toLocaleDateString('en-GB')}
+                      </Typography>
+                    )}
+                  </TableCell>
+                  <TableCell sx={{ 
+                    padding: '12px 16px',
+                    borderBottom: 'none'
+                  }}>
+                    {editingId === medicine.id ? (
+                      <Box sx={{ display: 'flex', gap: 1 }}>
+                        <IconButton
                           size="small"
-                        />
-                      </TableCell>
-                      
-                      <TableCell align="center">
-                        {editingId === medicine.id ? (
-                          <Stack direction="row" spacing={1}>
-                            <Tooltip title={t('save_changes')}>
-                              <IconButton size="small" color="primary" onClick={handleEditSave}>
-                                <SaveIcon fontSize="small" />
-                              </IconButton>
-                            </Tooltip>
-                            <Tooltip title={t('cancel')}>
-                              <IconButton size="small" color="secondary" onClick={handleEditCancel}>
-                                <CancelIcon fontSize="small" />
-                              </IconButton>
-                            </Tooltip>
-                          </Stack>
-                        ) : (
-                          <Stack direction="row" spacing={1}>
-                            <Tooltip title={t('edit_medicine')}>
-                              <IconButton size="small" color="primary" onClick={() => handleEditStart(medicine)}>
-                                <EditIcon fontSize="small" />
-                              </IconButton>
-                            </Tooltip>
-                            <Tooltip title={t('remove_medicine')}>
-                              <IconButton size="small" color="error" onClick={() => handleDelete(medicine.id)}>
-                                <DeleteIcon fontSize="small" />
-                              </IconButton>
-                            </Tooltip>
-                          </Stack>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </CardContent>
-        </Card>
-      </Stack>
+                          onClick={handleEditSave}
+                          sx={{ 
+                            color: '#28a745',
+                            '&:hover': { 
+                              backgroundColor: 'rgba(40, 167, 69, 0.08)' 
+                            }
+                          }}
+                        >
+                          <SaveIcon fontSize="small" />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          onClick={handleEditCancel}
+                          sx={{ 
+                            color: '#dc3545',
+                            '&:hover': { 
+                              backgroundColor: 'rgba(220, 53, 69, 0.08)' 
+                            }
+                          }}
+                        >
+                          <CancelIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+                    ) : (
+                      <Box sx={{ display: 'flex', gap: 1 }}>
+                        <IconButton
+                          size="small"
+                          onClick={() => handleEditStart(medicine)}
+                          sx={{ 
+                            color: '#0366d6',
+                            '&:hover': { 
+                              backgroundColor: 'rgba(3, 102, 214, 0.08)' 
+                            }
+                          }}
+                        >
+                          <EditIcon fontSize="small" />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          onClick={() => handleDelete(medicine.id)}
+                          sx={{ 
+                            color: '#dc3545',
+                            '&:hover': { 
+                              backgroundColor: 'rgba(220, 53, 69, 0.08)' 
+                            }
+                          }}
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Box>
+      </Box>
 
       {/* Add Medicine Dialog */}
-      <Dialog open={addDialogOpen} onClose={() => setAddDialogOpen(false)} maxWidth="md" fullWidth>
-        <DialogTitle>{t('add_new_medicine_to_inventory')}</DialogTitle>
-        <DialogContent>
-          <Stack spacing={3} sx={{ mt: 1 }}>
+      <Dialog 
+        open={addDialogOpen} 
+        onClose={() => setAddDialogOpen(false)}
+        maxWidth="sm" 
+        fullWidth
+        PaperProps={{
+          sx: { 
+            borderRadius: '6px',
+            border: '1px solid #e1e4e8'
+          }
+        }}
+      >
+        <DialogTitle sx={{ 
+          borderBottom: '1px solid #e1e4e8',
+          backgroundColor: '#f6f8fa'
+        }}>
+          <Typography variant="h6" sx={{ fontWeight: 600, color: '#24292e' }}>
+            Add New Medicine
+          </Typography>
+        </DialogTitle>
+        <DialogContent sx={{ pt: 3 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <TextField
-              fullWidth
-              label={t('medicine_name')}
+              label="Medicine Name"
               value={newMedicine.name}
               onChange={(e) => setNewMedicine(prev => ({ ...prev, name: e.target.value }))}
-              required
-            />
-            <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-              <TextField
-                fullWidth
-                label={t('stock_quantity')}
-                type="number"
-                value={newMedicine.stock}
-                onChange={(e) => setNewMedicine(prev => ({ ...prev, stock: Number(e.target.value) }))}
-                inputProps={{ min: 0 }}
-                required
-              />
-              <TextField
-                fullWidth
-                label={t('expiry_date')}
-                type="date"
-                value={newMedicine.expiryDate}
-                onChange={(e) => setNewMedicine(prev => ({ ...prev, expiryDate: e.target.value }))}
-                InputLabelProps={{ shrink: true }}
-                required
-              />
-            </Stack>
-            <TextField
               fullWidth
-              label={t('description')}
-              multiline
-              rows={2}
+              required
+              sx={{ 
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '6px',
+                  '& fieldset': {
+                    borderColor: '#e1e4e8',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#0366d6',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#0366d6',
+                  }
+                }
+              }}
+            />
+            <TextField
+              label="Description"
               value={newMedicine.description}
               onChange={(e) => setNewMedicine(prev => ({ ...prev, description: e.target.value }))}
+              fullWidth
+              multiline
+              rows={2}
+              sx={{ 
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '6px',
+                  '& fieldset': {
+                    borderColor: '#e1e4e8',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#0366d6',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#0366d6',
+                  }
+                }
+              }}
             />
-          </Stack>
+            <TextField
+              label="Initial Stock"
+              type="number"
+              value={newMedicine.stock}
+              onChange={(e) => setNewMedicine(prev => ({ ...prev, stock: parseInt(e.target.value) || 0 }))}
+              fullWidth
+              required
+              inputProps={{ min: 0 }}
+              sx={{ 
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '6px',
+                  '& fieldset': {
+                    borderColor: '#e1e4e8',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#0366d6',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#0366d6',
+                  }
+                }
+              }}
+            />
+            <TextField
+              label="Expiry Date"
+              type="date"
+              value={newMedicine.expiryDate}
+              onChange={(e) => setNewMedicine(prev => ({ ...prev, expiryDate: e.target.value }))}
+              fullWidth
+              required
+              InputLabelProps={{ shrink: true }}
+              sx={{ 
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '6px',
+                  '& fieldset': {
+                    borderColor: '#e1e4e8',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#0366d6',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#0366d6',
+                  }
+                }
+              }}
+            />
+          </Box>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setAddDialogOpen(false)}>{t('cancel')}</Button>
-          <Button onClick={handleAddMedicine} variant="contained">{t('add_medicine')}</Button>
+        <DialogActions sx={{ 
+          p: 3, 
+          pt: 2,
+          borderTop: '1px solid #e1e4e8',
+          backgroundColor: '#f6f8fa'
+        }}>
+          <Button 
+            onClick={() => setAddDialogOpen(false)}
+            sx={{ 
+              textTransform: 'none',
+              color: '#586069',
+              fontWeight: 500,
+              borderRadius: '6px'
+            }}
+          >
+            Cancel
+          </Button>
+          <Button 
+            onClick={handleAddMedicine}
+            variant="contained"
+            sx={{
+              backgroundColor: '#28a745',
+              '&:hover': { backgroundColor: '#218838' },
+              textTransform: 'none',
+              fontWeight: 500,
+              borderRadius: '6px',
+              px: 3
+            }}
+          >
+            Add Medicine
+          </Button>
         </DialogActions>
       </Dialog>
-    </Container>
+    </Box>
   );
 };
 

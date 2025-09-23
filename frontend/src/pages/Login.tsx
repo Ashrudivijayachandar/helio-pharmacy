@@ -10,7 +10,6 @@ import {
   TextField,
   Button,
   Typography,
-  Alert,
   Container,
   Stack,
 } from '@mui/material';
@@ -69,12 +68,6 @@ const Login: React.FC = () => {
             <Typography variant="body1" align="center" color="textSecondary" gutterBottom>
               Sign in to your account
             </Typography>
-
-            {error && (
-              <Alert severity="error" sx={{ mb: 2 }}>
-                {error}
-              </Alert>
-            )}
 
             <Box component="form" onSubmit={handleSubmit}>
               <TextField

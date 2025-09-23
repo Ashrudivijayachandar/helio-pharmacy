@@ -20,7 +20,6 @@ import {
   InputAdornment,
   Chip,
   Stack,
-  Alert,
   Button,
   IconButton,
   Dialog,
@@ -35,8 +34,6 @@ import {
 } from '@mui/material';
 import {
   Search as SearchIcon,
-  Warning as WarningIcon,
-  Error as ErrorIcon,
   Edit as EditIcon,
   Save as SaveIcon,
   Cancel as CancelIcon,
@@ -339,19 +336,6 @@ const MedicineStock: React.FC = () => {
             Add New Medicine
           </Button>
         </Stack>
-
-        {/* Alerts */}
-        {stats.lowStock > 0 && (
-          <Alert severity="warning" icon={<WarningIcon />}>
-            <strong>{stats.lowStock} medicines</strong> are running low on stock. Consider restocking soon.
-          </Alert>
-        )}
-        
-        {stats.outOfStock > 0 && (
-          <Alert severity="error" icon={<ErrorIcon />}>
-            <strong>{stats.outOfStock} medicines</strong> are out of stock. Immediate restocking required.
-          </Alert>
-        )}
 
         {/* Medicine Table */}
         <Card>
