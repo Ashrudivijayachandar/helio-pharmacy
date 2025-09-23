@@ -32,6 +32,7 @@ import {
   Select,
   MenuItem,
   Tooltip,
+  Container,
 } from '@mui/material';
 import {
   Search as SearchIcon,
@@ -228,70 +229,147 @@ const MedicineStock: React.FC = () => {
   };
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: 'primary.main' }}>
-        {t('medicine_inventory_management')}
-      </Typography>
-      <Typography variant="subtitle1" sx={{ mb: 3, color: 'text.secondary' }}>
-        {t('government_pharmacy_pharmacist_access')}
-      </Typography>
+    <Container maxWidth="lg" sx={{ py: 3, pb: 10 }}>
+      {/* Header */}
+      <Box sx={{ mb: 4 }}>
+        <Typography 
+          variant="h4" 
+          component="h1"
+          gutterBottom 
+          sx={{ 
+            fontWeight: 400, 
+            color: '#202124',
+            mb: 1
+          }}
+        >
+          {t('medicine_inventory_management') || 'Medicine Inventory'}
+        </Typography>
+        <Typography 
+          variant="body1" 
+          sx={{ 
+            color: '#5f6368',
+            maxWidth: 600
+          }}
+        >
+          {t('government_pharmacy_pharmacist_access') || 'Manage and track medicine stock levels with real-time updates'}
+        </Typography>
+      </Box>
 
       <Stack spacing={3}>
         {/* Controls */}
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="center">
-          <TextField
-            placeholder={t('search_medicines')}
-            variant="outlined"
-            size="small"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            sx={{ flexGrow: 1 }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={() => setAddDialogOpen(true)}
-            sx={{ minWidth: 180 }}
-          >
-            {t('add_new_medicine')}
-          </Button>
-        </Stack>
+        <Card sx={{ border: '1px solid #e8eaed', borderRadius: 2 }}>
+          <CardContent sx={{ p: 3 }}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="center">
+              <TextField
+                placeholder={t('search_medicines') || 'Search medicines...'}
+                variant="outlined"
+                size="medium"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                sx={{ 
+                  flexGrow: 1,
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: '#dadce0',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#4285f4',
+                    },
+                  }
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon sx={{ color: '#5f6368' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <Button
+                variant="contained"
+                startIcon={<AddIcon />}
+                onClick={() => setAddDialogOpen(true)}
+                sx={{ 
+                  minWidth: 180,
+                  backgroundColor: '#4285f4',
+                  textTransform: 'none',
+                  '&:hover': {
+                    backgroundColor: '#3367d6',
+                  }
+                }}
+              >
+                {t('add_new_medicine') || 'Add Medicine'}
+              </Button>
+            </Stack>
+          </CardContent>
+        </Card>
 
         {/* Alerts */}
         {stats.lowStock > 0 && (
-          <Alert severity="warning" icon={<WarningIcon />}>
-            <strong>{stats.lowStock} {t('medicines')}</strong> {t('running_low_stock')}
+          <Alert 
+            severity="warning" 
+            icon={<WarningIcon />}
+            sx={{
+              border: '1px solid #fdd835',
+              borderRadius: 2,
+              backgroundColor: '#fffbf0',
+            }}
+          >
+            <strong>{stats.lowStock} {t('medicines') || 'medicines'}</strong> {t('running_low_stock') || 'running low on stock'}
           </Alert>
         )}
         
         {stats.outOfStock > 0 && (
-          <Alert severity="error" icon={<ErrorIcon />}>
-            <strong>{stats.outOfStock} {t('medicines')}</strong> {t('out_of_stock_alert')}
+          <Alert 
+            severity="error" 
+            icon={<ErrorIcon />}
+            sx={{
+              border: '1px solid #f44336',
+              borderRadius: 2,
+              backgroundColor: '#fef7f7',
+            }}
+          >
+            <strong>{stats.outOfStock} {t('medicines') || 'medicines'}</strong> {t('out_of_stock_alert') || 'are out of stock'}
           </Alert>
         )}
 
         {/* Medicine Table */}
-        <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              {t('medicine_inventory')} ({filteredMedicines.length} {t('items')})
-            </Typography>
-            <TableContainer component={Paper} variant="outlined">
-              <Table sx={{ minWidth: 650 }} size="small">
+        <Card sx={{ border: '1px solid #e8eaed', borderRadius: 2 }}>
+          <CardContent sx={{ p: 0 }}>
+            <Box sx={{ p: 3, borderBottom: '1px solid #e8eaed' }}>
+              <Typography 
+                variant="h6" 
+                sx={{ 
+                  fontWeight: 400, 
+                  color: '#202124' 
+                }}
+              >
+                {t('medicine_inventory') || 'Medicine Inventory'} ({filteredMedicines.length} {t('items') || 'items'})
+              </Typography>
+            </Box>
+            <TableContainer 
+              component={Paper} 
+              sx={{ 
+                boxShadow: 'none',
+                border: 'none'
+              }}
+            >
+              <Table sx={{ minWidth: 650 }}>
                 <TableHead>
-                  <TableRow sx={{ backgroundColor: 'grey.50' }}>
-                    <TableCell><strong>{t('medicine_name')}</strong></TableCell>
-                    <TableCell align="center"><strong>{t('stock_qty')}</strong></TableCell>
-                    <TableCell align="center"><strong>{t('expiry_date')}</strong></TableCell>
-                    <TableCell align="center"><strong>{t('status')}</strong></TableCell>
-                    <TableCell align="center"><strong>{t('actions')}</strong></TableCell>
+                  <TableRow sx={{ 
+                    backgroundColor: '#f8f9fa',
+                    '& .MuiTableCell-head': {
+                      borderBottom: '1px solid #e8eaed',
+                      color: '#5f6368',
+                      fontWeight: 500,
+                      fontSize: '0.875rem',
+                    }
+                  }}>
+                    <TableCell>{t('medicine_name') || 'Medicine Name'}</TableCell>
+                    <TableCell align="center">{t('stock_qty') || 'Stock Quantity'}</TableCell>
+                    <TableCell align="center">{t('expiry_date') || 'Expiry Date'}</TableCell>
+                    <TableCell align="center">{t('status') || 'Status'}</TableCell>
+                    <TableCell align="center">{t('actions') || 'Actions'}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -456,7 +534,7 @@ const MedicineStock: React.FC = () => {
           <Button onClick={handleAddMedicine} variant="contained">{t('add_medicine')}</Button>
         </DialogActions>
       </Dialog>
-    </Box>
+    </Container>
   );
 };
 

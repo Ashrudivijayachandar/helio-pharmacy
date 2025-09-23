@@ -1,217 +1,248 @@
-/**
- * Home page component - Main pharmacy overview
+﻿/**
+ * Home page - Welcome to Helio Medical Platform
  */
 
 import React from 'react';
 import {
   Box,
-  Card,
-  CardContent,
   Typography,
   Button,
-  Stack,
+  Card,
+  CardContent,
+  TextField,
+  InputAdornment,
+  FormControl,
+  Select,
+  MenuItem,
+  Checkbox,
+  FormControlLabel,
+  Avatar,
+  Container,
 } from '@mui/material';
-import { useAuth } from '../hooks/useAuth';
-import { useTranslation } from 'react-i18next';
+import {
+  Search as SearchIcon,
+  FilterList as FilterIcon,
+  Person as PersonIcon,
+} from '@mui/icons-material';
 
 const Home: React.FC = () => {
-  const { user } = useAuth();
-  const { t } = useTranslation();
-
   return (
-    <Box sx={{ flexGrow: 1, p: { xs: 2, md: 4 }, bgcolor: 'background.default', minHeight: '100vh' }}>
-      {/* Welcome Header */}
-      <Box sx={{ mb: 5, textAlign: { xs: 'center', md: 'left' } }}>
-        <Typography 
-          variant="h1" 
-          component="h1" 
-          gutterBottom
+    <Container maxWidth="lg" sx={{ py: 3, pb: 10 }}>
+      {/* Header */}
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 4 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box sx={{ 
+            width: 40, 
+            height: 40, 
+            borderRadius: '50%', 
+            backgroundColor: '#4285f4',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+            fontSize: '1.2rem',
+            fontWeight: 'bold'
+          }}>
+            H
+          </Box>
+          <Typography variant="h6" fontWeight={400} color="#202124">
+            Helio
+          </Typography>
+        </Box>
+        <Button
+          variant="outlined"
+          color="error"
+          size="small"
           sx={{ 
-            fontSize: { xs: '2rem', md: '2.5rem' },
-            fontWeight: 700,
-            color: 'text.primary',
-            mb: 1,
+            textTransform: 'none',
+            fontSize: '0.875rem',
+            borderColor: '#ea4335',
+            color: '#ea4335',
+            '&:hover': {
+              backgroundColor: '#fce8e6',
+              borderColor: '#ea4335',
+            }
           }}
         >
-          {t('welcome')}
-        </Typography>
-        <Typography 
-          variant="h6" 
-          color="text.secondary" 
-          sx={{ 
-            fontSize: { xs: '1rem', md: '1.125rem' },
-            fontWeight: 400,
-            maxWidth: 600,
-          }}
-        >
-          {t('overview')}
-        </Typography>
+          Logout
+        </Button>
       </Box>
 
-      {/* Quick Actions and Info */}
-      <Stack direction={{ xs: 'column', lg: 'row' }} spacing={4}>
-        <Box sx={{ flex: 2 }}>
-          <Card sx={{ height: 'fit-content' }}>
-            <CardContent sx={{ p: 4 }}>
-              <Typography 
-                variant="h5" 
-                gutterBottom 
-                sx={{ 
-                  fontWeight: 600, 
-                  color: 'text.primary',
-                  mb: 3,
-                }}
-              >
-                {t('quick_actions')}
-              </Typography>
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
-                <Button 
-                  variant="contained" 
-                  size="large"
-                  href="/prescriptions"
-                  sx={{ 
-                    flex: 1,
-                    py: 2,
-                    fontSize: '1rem',
-                  }}
-                >
-                  {t('prescription') || 'Prescriptions'}
-                </Button>
-                <Button 
-                  variant="outlined" 
-                  size="large"
-                  href="/medicine-stock"
-                  sx={{ 
-                    flex: 1,
-                    py: 2,
-                    fontSize: '1rem',
-                  }}
-                >
-                  {t('view_medicine_stock')}
-                </Button>
-              </Stack>
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} sx={{ mt: 2 }}>
-                <Button 
-                  variant="outlined" 
-                  size="large"
-                  href="/rare-medicines"
-                  sx={{ 
-                    flex: 1,
-                    py: 2,
-                    fontSize: '1rem',
-                  }}
-                >
-                  Rare Medicines
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Box>
+      {/* Welcome Section */}
+      <Box sx={{ textAlign: 'center', mb: 6, py: 4 }}>
+        <Typography 
+          variant="h4" 
+          component="h1" 
+          fontWeight={400}
+          color="#202124"
+          mb={2}
+        >
+          Welcome to Helio
+        </Typography>
+        <Typography 
+          variant="body1" 
+          color="#5f6368"
+          mb={4}
+          sx={{ maxWidth: 600, mx: 'auto' }}
+        >
+          Connecting rural patients with doctors through telemedicine
+        </Typography>
         
-        <Box sx={{ flex: 1 }}>
-          <Card sx={{ height: 'fit-content' }}>
-            <CardContent sx={{ p: 4 }}>
-              <Typography 
-                variant="h5" 
-                gutterBottom 
-                sx={{ 
-                  fontWeight: 600, 
-                  color: 'text.primary',
-                  mb: 3,
-                }}
-              >
-                {t('pharmacy_info')}
-              </Typography>
-              <Stack spacing={3}>
-                <Box>
-                  <Typography 
-                    variant="body2" 
-                    color="text.secondary"
-                    sx={{ 
-                      fontWeight: 500, 
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                      fontSize: '0.75rem',
-                      mb: 0.5,
+        <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Button
+            variant="outlined"
+            sx={{
+              borderColor: '#dadce0',
+              color: '#5f6368',
+              textTransform: 'none',
+              px: 3,
+              py: 1,
+              '&:hover': {
+                backgroundColor: '#f8f9fa',
+                borderColor: '#dadce0',
+              }
+            }}
+          >
+            Find Your Doctor
+          </Button>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: '#4285f4',
+              textTransform: 'none',
+              px: 3,
+              py: 1,
+              '&:hover': {
+                backgroundColor: '#3367d6',
+              }
+            }}
+          >
+            My Appointments
+          </Button>
+        </Box>
+      </Box>
+
+      {/* Find Your Doctor Section */}
+      <Card sx={{ mb: 4, border: '1px solid #e8eaed' }}>
+        <CardContent sx={{ p: 3 }}>
+          <Typography 
+            variant="h5" 
+            component="h2" 
+            fontWeight={400}
+            color="#202124"
+            mb={3}
+            textAlign="center"
+          >
+            Find Your Doctor
+          </Typography>
+          
+          <Box sx={{ mb: 3 }}>
+            <TextField
+              fullWidth
+              placeholder="Search doctors..."
+              variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon sx={{ color: '#5f6368' }} />
+                  </InputAdornment>
+                ),
+              }}
+              sx={{ mb: 2 }}
+            />
+            
+            <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+              <FormControl sx={{ minWidth: 200 }}>
+                <Select
+                  displayEmpty
+                  defaultValue=""
+                  size="medium"
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <FilterIcon sx={{ color: '#5f6368', fontSize: '1.2rem' }} />
+                    </InputAdornment>
+                  }
+                  sx={{
+                    '& .MuiSelect-select': {
+                      color: '#5f6368',
+                    }
+                  }}
+                >
+                  <MenuItem value="">All Specialties</MenuItem>
+                  <MenuItem value="cardiology">Cardiology</MenuItem>
+                  <MenuItem value="pediatrics">Pediatrics</MenuItem>
+                  <MenuItem value="general">General Medicine</MenuItem>
+                  <MenuItem value="gynecology">Gynecology</MenuItem>
+                </Select>
+              </FormControl>
+              
+              <FormControlLabel
+                control={
+                  <Checkbox 
+                    sx={{
+                      color: '#5f6368',
+                      '&.Mui-checked': {
+                        color: '#4285f4',
+                      }
                     }}
-                  >
-                    {t('current_branch')}
+                  />
+                }
+                label={
+                  <Typography variant="body2" color="#5f6368">
+                    available only
                   </Typography>
-                  <Typography 
-                    variant="body1"
-                    sx={{ 
-                      fontWeight: 500,
-                      color: 'text.primary',
-                    }}
-                  >
-                    {user?.pharmacy || 'Helio Pharmacy Central'}
+                }
+              />
+            </Box>
+          </Box>
+
+          {/* Doctor Card Example */}
+          <Card sx={{ border: '1px solid #e8eaed', borderRadius: 2 }}>
+            <CardContent sx={{ p: 3 }}>
+              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+                <Avatar
+                  sx={{
+                    width: 48,
+                    height: 48,
+                    backgroundColor: '#5f6368',
+                  }}
+                >
+                  <PersonIcon />
+                </Avatar>
+                <Box sx={{ flex: 1 }}>
+                  <Typography variant="h6" fontWeight={400} color="#202124" mb={0.5}>
+                    Dr. Rajesh Kumar
+                  </Typography>
+                  <Typography variant="body2" color="#5f6368" mb={0.5}>
+                    Cardiology
+                  </Typography>
+                  <Typography variant="body2" color="#5f6368" mb={1}>
+                    MBBS, MD Cardiology
+                  </Typography>
+                  <Box sx={{ 
+                    display: 'inline-flex', 
+                    alignItems: 'center', 
+                    backgroundColor: '#e6f4ea',
+                    color: '#137333',
+                    px: 2,
+                    py: 0.5,
+                    borderRadius: 1,
+                    fontSize: '0.75rem',
+                    fontWeight: 500,
+                    mb: 1
+                  }}>
+                    Available
+                  </Box>
+                  <Typography variant="body2" color="#5f6368">
+                    15 years experience
                   </Typography>
                 </Box>
-                <Box>
-                  <Typography 
-                    variant="body2" 
-                    color="text.secondary"
-                    sx={{ 
-                      fontWeight: 500, 
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                      fontSize: '0.75rem',
-                      mb: 0.5,
-                    }}
-                  >
-                    {t('your_role')}
-                  </Typography>
-                  <Typography 
-                    variant="body1"
-                    sx={{ 
-                      fontWeight: 500,
-                      color: 'text.primary',
-                    }}
-                  >
-                    {user?.role || 'Administrator'}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography 
-                    variant="body2" 
-                    color="text.secondary"
-                    sx={{ 
-                      fontWeight: 500, 
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                      fontSize: '0.75rem',
-                      mb: 0.5,
-                    }}
-                  >
-                    {t('status')}
-                  </Typography>
-                  <Typography 
-                    variant="body1" 
-                    color="success.main"
-                    sx={{ 
-                      fontWeight: 600,
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 1,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        width: 8,
-                        height: 8,
-                        bgcolor: 'success.main',
-                        borderRadius: '50%',
-                      }}
-                    />
-                    {t('online_active')}
-                  </Typography>
-                </Box>
-              </Stack>
+              </Box>
             </CardContent>
           </Card>
-        </Box>
-      </Stack>
-    </Box>
+        </CardContent>
+      </Card>
+    </Container>
   );
 };
 

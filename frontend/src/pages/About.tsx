@@ -13,6 +13,7 @@ import {
   ListItemIcon,
   ListItemText,
   Avatar,
+  Container,
 } from '@mui/material';
 import {
   LocalPharmacy as PharmacyIcon,
@@ -24,14 +25,14 @@ import {
 
 const About: React.FC = () => {
   return (
-    <Box sx={{ flexGrow: 1, p: 3, maxWidth: 800, mx: 'auto' }}>
+    <Container maxWidth="md" sx={{ py: 3, pb: 10 }}>
       {/* Header */}
       <Box sx={{ mb: 6, textAlign: 'center' }}>
         <Avatar
           sx={{
             width: 80,
             height: 80,
-            bgcolor: 'primary.main',
+            bgcolor: '#4285f4',
             mx: 'auto',
             mb: 3,
             fontSize: '2rem'
@@ -40,114 +41,157 @@ const About: React.FC = () => {
           <PharmacyIcon fontSize="large" />
         </Avatar>
         <Typography 
-          variant="h3" 
+          variant="h4" 
           component="h1" 
           gutterBottom 
           sx={{ 
-            color: 'primary.main',
-            fontWeight: 600,
+            color: '#202124',
+            fontWeight: 400,
             letterSpacing: '-0.02em'
           }}
         >
-          Helio Pharmacy
+          About Helio Pharmacy
         </Typography>
         <Typography 
-          variant="h6" 
-          color="text.secondary"
-          sx={{ 
-            fontWeight: 400,
-            lineHeight: 1.5
-          }}
+          variant="body1" 
+          color="#5f6368"
+          sx={{ maxWidth: 600, mx: 'auto' }}
         >
-          Professional Healthcare Services
+          Your trusted healthcare partner, serving the community with quality medicines and professional care.
         </Typography>
       </Box>
 
       {/* Contact Information */}
-      <Card 
-        sx={{ 
-          border: '1px solid',
-          borderColor: 'divider',
-          boxShadow: 'none'
-        }}
-      >
+      <Card sx={{ mb: 4, border: '1px solid #e8eaed', borderRadius: 2 }}>
         <CardContent sx={{ p: 4 }}>
           <Typography 
             variant="h5" 
+            component="h2" 
             gutterBottom 
             sx={{ 
-              color: 'primary.main',
-              fontWeight: 600,
+              color: '#202124',
+              fontWeight: 400,
               mb: 3
             }}
           >
             Contact Information
           </Typography>
-          <List sx={{ pt: 0 }}>
-            <ListItem sx={{ px: 0, py: 2 }}>
+          <List sx={{ '& .MuiListItem-root': { px: 0 } }}>
+            <ListItem>
               <ListItemIcon>
-                <LocationIcon color="primary" sx={{ fontSize: 28 }} />
+                <Box
+                  sx={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: '50%',
+                    backgroundColor: '#e8f5e8',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <PhoneIcon sx={{ color: '#137333' }} />
+                </Box>
               </ListItemIcon>
               <ListItemText
                 primary={
-                  <Typography variant="subtitle1" fontWeight={500}>
-                    Address
-                  </Typography>
-                }
-                secondary={
-                  <Typography variant="body1" color="text.primary" sx={{ mt: 0.5 }}>
-                    123 Healthcare Street, Medical District, City 12345
-                  </Typography>
-                }
-              />
-            </ListItem>
-            <ListItem sx={{ px: 0, py: 2 }}>
-              <ListItemIcon>
-                <PhoneIcon color="primary" sx={{ fontSize: 28 }} />
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <Typography variant="subtitle1" fontWeight={500}>
+                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124' }}>
                     Phone
                   </Typography>
                 }
                 secondary={
-                  <Typography variant="body1" color="text.primary" sx={{ mt: 0.5 }}>
-                    +1 (555) 123-4567
+                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
+                    +91 98765 43210
                   </Typography>
                 }
               />
             </ListItem>
-            <ListItem sx={{ px: 0, py: 2 }}>
+            
+            <ListItem>
               <ListItemIcon>
-                <EmailIcon color="primary" sx={{ fontSize: 28 }} />
+                <Box
+                  sx={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: '50%',
+                    backgroundColor: '#e3f2fd',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <EmailIcon sx={{ color: '#1976d2' }} />
+                </Box>
               </ListItemIcon>
               <ListItemText
                 primary={
-                  <Typography variant="subtitle1" fontWeight={500}>
+                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124' }}>
                     Email
                   </Typography>
                 }
                 secondary={
-                  <Typography variant="body1" color="text.primary" sx={{ mt: 0.5 }}>
-                    info@heliopharmacy.com
+                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
+                    contact@heliopharmacy.com
                   </Typography>
                 }
               />
             </ListItem>
-            <ListItem sx={{ px: 0, py: 2 }}>
+            
+            <ListItem>
               <ListItemIcon>
-                <ScheduleIcon color="primary" sx={{ fontSize: 28 }} />
+                <Box
+                  sx={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: '50%',
+                    backgroundColor: '#fff3e0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <LocationIcon sx={{ color: '#f57c00' }} />
+                </Box>
               </ListItemIcon>
               <ListItemText
                 primary={
-                  <Typography variant="subtitle1" fontWeight={500}>
-                    Operating Hours
+                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124' }}>
+                    Address
                   </Typography>
                 }
                 secondary={
-                  <Typography variant="body1" color="text.primary" sx={{ mt: 0.5 }}>
-                    Open 24/7 - Available Full Time
+                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
+                    123 Healthcare Street, Medical District, City - 110001
+                  </Typography>
+                }
+              />
+            </ListItem>
+            
+            <ListItem>
+              <ListItemIcon>
+                <Box
+                  sx={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: '50%',
+                    backgroundColor: '#f3e5f5',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <ScheduleIcon sx={{ color: '#7b1fa2' }} />
+                </Box>
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124' }}>
+                    Hours
+                  </Typography>
+                }
+                secondary={
+                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
+                    24/7 - Always available for your healthcare needs
                   </Typography>
                 }
               />
@@ -155,8 +199,86 @@ const About: React.FC = () => {
           </List>
         </CardContent>
       </Card>
-    </Box>
+
+      {/* Services */}
+      <Card sx={{ border: '1px solid #e8eaed', borderRadius: 2 }}>
+        <CardContent sx={{ p: 4 }}>
+          <Typography 
+            variant="h5" 
+            component="h2" 
+            gutterBottom 
+            sx={{ 
+              color: '#202124',
+              fontWeight: 400,
+              mb: 3
+            }}
+          >
+            Our Services
+          </Typography>
+          <List sx={{ '& .MuiListItem-root': { px: 0 } }}>
+            <ListItem>
+              <ListItemText
+                primary={
+                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124', mb: 0.5 }}>
+                    Prescription Medicines
+                  </Typography>
+                }
+                secondary={
+                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
+                    Complete range of prescription medications with proper consultation
+                  </Typography>
+                }
+              />
+            </ListItem>
+            
+            <ListItem>
+              <ListItemText
+                primary={
+                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124', mb: 0.5 }}>
+                    Rare Medicine Access
+                  </Typography>
+                }
+                secondary={
+                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
+                    Specialized medicines and rare drug procurement services
+                  </Typography>
+                }
+              />
+            </ListItem>
+            
+            <ListItem>
+              <ListItemText
+                primary={
+                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124', mb: 0.5 }}>
+                    Digital Health Records
+                  </Typography>
+                }
+                secondary={
+                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
+                    Secure digital storage of prescriptions and medical history
+                  </Typography>
+                }
+              />
+            </ListItem>
+            
+            <ListItem>
+              <ListItemText
+                primary={
+                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124', mb: 0.5 }}>
+                    Professional Consultation
+                  </Typography>
+                }
+                secondary={
+                  <Typography variant="body2" sx={{ color: '#5f6368' }}>
+                    Expert pharmacist guidance and medication counseling
+                  </Typography>
+                }
+              />
+            </ListItem>
+          </List>
+        </CardContent>
+      </Card>
+    </Container>
   );
 };
-
 export default About;

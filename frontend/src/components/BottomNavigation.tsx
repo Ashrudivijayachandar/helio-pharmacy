@@ -67,10 +67,9 @@ const BottomNav: React.FC = () => {
         left: 0,
         right: 0,
         zIndex: theme.zIndex.appBar,
-        borderTop: `1px solid ${theme.palette.divider}`,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: '0px -2px 8px rgba(0, 0, 0, 0.1)',
-        backdropFilter: 'blur(8px)',
+        borderTop: `1px solid #e8eaed`,
+        backgroundColor: '#ffffff',
+        boxShadow: '0px -1px 3px rgba(60, 64, 67, 0.15)',
       }}
       elevation={0}
     >
@@ -78,31 +77,33 @@ const BottomNav: React.FC = () => {
         value={getNavigationValue()}
         onChange={handleNavigationChange}
         sx={{
-          height: isMobile ? 70 : 80,
+          height: 64,
           backgroundColor: 'transparent',
           '& .MuiBottomNavigationAction-root': {
             minWidth: 'auto',
-            paddingTop: 1.5,
-            paddingBottom: 1,
+            paddingTop: 1,
+            paddingBottom: 0.5,
             transition: 'all 0.2s ease-in-out',
+            color: '#5f6368',
             '&.Mui-selected': {
-              color: theme.palette.primary.main,
+              color: '#4285f4',
               '& .MuiSvgIcon-root': {
-                transform: 'scale(1.1)',
+                transform: 'scale(1.05)',
               },
               '& .MuiBottomNavigationAction-label': {
-                fontWeight: 600,
+                fontWeight: 500,
+                fontSize: '0.75rem',
               },
             },
             '&:hover': {
-              backgroundColor: 'rgba(108, 117, 125, 0.08)',
-              borderRadius: 2,
+              backgroundColor: 'rgba(66, 133, 244, 0.04)',
+              borderRadius: 8,
             },
           },
           '& .MuiBottomNavigationAction-label': {
-            fontSize: isMobile ? '0.75rem' : '0.875rem',
+            fontSize: '0.75rem',
             marginTop: 0.5,
-            fontWeight: 500,
+            fontWeight: 400,
           },
         }}
       >
@@ -111,47 +112,47 @@ const BottomNav: React.FC = () => {
           icon={<HomeIcon />}
           sx={{
             '& .MuiSvgIcon-root': {
-              fontSize: isMobile ? '1.5rem' : '1.75rem',
+              fontSize: '1.4rem',
               transition: 'transform 0.2s ease-in-out',
             },
           }}
         />
         <BottomNavigationAction
-          label="Medicine Stock"
+          label="Medicines"
           icon={<PharmacyIcon />}
           sx={{
             '& .MuiSvgIcon-root': {
-              fontSize: isMobile ? '1.5rem' : '1.75rem',
+              fontSize: '1.4rem',
               transition: 'transform 0.2s ease-in-out',
             },
           }}
         />
         <BottomNavigationAction
-          label="Prescriptions"
+          label="Availability"
           icon={<ReceiptIcon />}
           sx={{
             '& .MuiSvgIcon-root': {
-              fontSize: isMobile ? '1.5rem' : '1.75rem',
+              fontSize: '1.4rem',
               transition: 'transform 0.2s ease-in-out',
             },
           }}
         />
         <BottomNavigationAction
-          label="Rare Medicines"
+          label="Profile"
           icon={<RareMedicineIcon />}
           sx={{
             '& .MuiSvgIcon-root': {
-              fontSize: isMobile ? '1.5rem' : '1.75rem',
+              fontSize: '1.4rem',
               transition: 'transform 0.2s ease-in-out',
             },
           }}
         />
         <BottomNavigationAction
-          label="About"
+          label="Settings"
           icon={<InfoIcon />}
           sx={{
             '& .MuiSvgIcon-root': {
-              fontSize: isMobile ? '1.5rem' : '1.75rem',
+              fontSize: '1.4rem',
               transition: 'transform 0.2s ease-in-out',
             },
           }}

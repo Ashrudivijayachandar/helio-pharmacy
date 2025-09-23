@@ -21,151 +21,262 @@ import { AuthProvider } from './hooks/useAuth';
 // Import i18n configuration
 import './i18n';
 
-// Create professional theme with blue color scheme
+// Create medical theme matching the provided screenshots
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
-      light: '#42a5f5',
-      dark: '#1565c0',
+      main: '#4285f4', // Google Blue / Medical Blue
+      light: '#66a6ff',
+      dark: '#2962ff',
+      contrastText: '#ffffff',
     },
     secondary: {
-      main: '#1976d2',
-      light: '#42a5f5',
-      dark: '#1565c0',
+      main: '#34a853', // Success Green for available items
+      light: '#69c86a',
+      dark: '#2e7d32',
+      contrastText: '#ffffff',
+    },
+    error: {
+      main: '#ea4335', // Error Red for unavailable/busy
+      light: '#ff6659',
+      dark: '#c62828',
+    },
+    warning: {
+      main: '#fbbc04', // Warning Yellow
+      light: '#ffcc02',
+      dark: '#f57c00',
+    },
+    info: {
+      main: '#4285f4',
+      light: '#66a6ff',
+      dark: '#2962ff',
+    },
+    success: {
+      main: '#34a853',
+      light: '#69c86a',
+      dark: '#2e7d32',
     },
     background: {
-      default: '#f8fafc',
+      default: '#f8f9fa', // Light gray background
       paper: '#ffffff',
     },
     text: {
-      primary: '#1e293b',
-      secondary: '#64748b',
+      primary: '#202124', // Dark gray for primary text
+      secondary: '#5f6368', // Medium gray for secondary text
     },
     grey: {
-      50: '#f8fafc',
-      100: '#f1f5f9',
-      200: '#e2e8f0',
-      300: '#cbd5e1',
-      400: '#94a3b8',
-      500: '#64748b',
-      600: '#475569',
-      700: '#334155',
-      800: '#1e293b',
-      900: '#0f172a',
+      50: '#f8f9fa',
+      100: '#f1f3f4',
+      200: '#e8eaed',
+      300: '#dadce0',
+      400: '#bdc1c6',
+      500: '#9aa0a6',
+      600: '#80868b',
+      700: '#5f6368',
+      800: '#3c4043',
+      900: '#202124',
     },
+    divider: '#e8eaed',
   },
   typography: {
     fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
       'Roboto',
       '"Helvetica Neue"',
       'Arial',
       'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
     ].join(','),
     h1: {
-      fontWeight: 700,
-      fontSize: '2.5rem',
+      fontWeight: 400,
+      fontSize: '2.125rem',
       lineHeight: 1.2,
-      letterSpacing: '-0.02em',
+      color: '#202124',
     },
     h2: {
-      fontWeight: 600,
-      fontSize: '2rem',
+      fontWeight: 400,
+      fontSize: '1.75rem',
       lineHeight: 1.3,
-      letterSpacing: '-0.01em',
+      color: '#202124',
     },
     h3: {
-      fontWeight: 600,
+      fontWeight: 400,
       fontSize: '1.5rem',
       lineHeight: 1.4,
+      color: '#202124',
     },
     h4: {
-      fontWeight: 600,
+      fontWeight: 500,
       fontSize: '1.25rem',
       lineHeight: 1.4,
+      color: '#202124',
     },
     h5: {
-      fontWeight: 600,
+      fontWeight: 500,
       fontSize: '1.125rem',
       lineHeight: 1.4,
+      color: '#202124',
     },
     h6: {
-      fontWeight: 600,
+      fontWeight: 500,
       fontSize: '1rem',
       lineHeight: 1.4,
+      color: '#202124',
     },
     body1: {
-      fontSize: '1rem',
-      lineHeight: 1.6,
-    },
-    body2: {
       fontSize: '0.875rem',
       lineHeight: 1.5,
+      color: '#202124',
+    },
+    body2: {
+      fontSize: '0.75rem',
+      lineHeight: 1.4,
+      color: '#5f6368',
     },
     button: {
-      fontWeight: 600,
+      fontWeight: 500,
       textTransform: 'none',
+      fontSize: '0.875rem',
+    },
+    caption: {
+      fontSize: '0.75rem',
+      color: '#5f6368',
     },
   },
   shape: {
-    borderRadius: 12,
+    borderRadius: 8,
   },
   shadows: [
     'none',
-    '0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)',
-    '0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)',
-    '0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)',
-    '0px 20px 25px -5px rgba(0, 0, 0, 0.1), 0px 10px 10px -5px rgba(0, 0, 0, 0.04)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    '0px 25px 50px -12px rgba(0, 0, 0, 0.25)',
+    '0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px rgba(60, 64, 67, 0.15)',
+    '0px 1px 2px rgba(60, 64, 67, 0.3), 0px 2px 6px rgba(60, 64, 67, 0.15)',
+    '0px 4px 8px rgba(60, 64, 67, 0.15), 0px 2px 3px rgba(60, 64, 67, 0.3)',
+    '0px 6px 10px rgba(60, 64, 67, 0.15), 0px 2px 3px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
+    '0px 8px 12px rgba(60, 64, 67, 0.15), 0px 4px 4px rgba(60, 64, 67, 0.3)',
   ],
   components: {
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
-          border: '1px solid #e2e8f0',
-          boxShadow: '0px 1px 3px rgba(25, 118, 210, 0.1), 0px 1px 2px rgba(25, 118, 210, 0.06)',
+          borderRadius: 8,
+          border: '1px solid #e8eaed',
+          boxShadow: '0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px rgba(60, 64, 67, 0.15)',
+          backgroundColor: '#ffffff',
         },
       },
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 8,
-          fontWeight: 600,
-          padding: '10px 24px',
+          borderRadius: 6,
+          fontWeight: 500,
+          padding: '8px 24px',
           textTransform: 'none',
+          fontSize: '0.875rem',
         },
         contained: {
-          boxShadow: '0px 2px 4px rgba(25, 118, 210, 0.2)',
+          boxShadow: 'none',
           '&:hover': {
-            boxShadow: '0px 4px 8px rgba(25, 118, 210, 0.3)',
+            boxShadow: '0px 1px 2px rgba(66, 133, 244, 0.3), 0px 1px 3px rgba(66, 133, 244, 0.15)',
           },
+        },
+        outlined: {
+          borderColor: '#dadce0',
+          color: '#5f6368',
+          '&:hover': {
+            backgroundColor: '#f8f9fa',
+            borderColor: '#dadce0',
+          },
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: 16,
+          fontSize: '0.75rem',
+        },
+        filled: {
+          '&.MuiChip-colorPrimary': {
+            backgroundColor: '#e8f0fe',
+            color: '#1a73e8',
+          },
+          '&.MuiChip-colorSecondary': {
+            backgroundColor: '#e6f4ea',
+            color: '#137333',
+          },
+          '&.MuiChip-colorError': {
+            backgroundColor: '#fce8e6',
+            color: '#d93025',
+          },
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            borderRadius: 6,
+            '& fieldset': {
+              borderColor: '#dadce0',
+            },
+            '&:hover fieldset': {
+              borderColor: '#5f6368',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: '#4285f4',
+              borderWidth: 2,
+            },
+          },
+        },
+      },
+    },
+    MuiTableHead: {
+      styleOverrides: {
+        root: {
+          '& .MuiTableCell-head': {
+            backgroundColor: '#f8f9fa',
+            borderBottom: '1px solid #e8eaed',
+            fontWeight: 500,
+            fontSize: '0.75rem',
+            color: '#5f6368',
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+          },
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          borderBottom: '1px solid #e8eaed',
+          fontSize: '0.875rem',
+          padding: '12px 16px',
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#ffffff',
+          borderRadius: 8,
         },
       },
     },
