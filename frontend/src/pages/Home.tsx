@@ -7,10 +7,12 @@ import {
   Box,
   Typography,
   Button,
-  Card,
-  CardContent,
   Container,
-  Stack,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  Chip,
 } from '@mui/material';
 import { useAuth } from '../hooks/useAuth';
 import { useTranslation } from 'react-i18next';
@@ -27,234 +29,384 @@ const Home: React.FC = () => {
     }
   };
 
-  const quickStats = [
-    { label: t('availableMedicines') || 'Available Medicines', value: '1,250', color: '#4285f4' },
-    { label: t('lowStockItems') || 'Low Stock Items', value: '12', color: '#ea4335' },
-    { label: t('pendingOrders') || 'Pending Orders', value: '8', color: '#34a853' },
-    { label: t('expiringSoon') || 'Expiring Soon', value: '5', color: '#fbbc04' },
-  ];
-
-  const quickActions = [
-    { label: t('view_medicine_stock') || 'Medicine Stock', color: '#4285f4', href: '/medicine-stock' },
-    { label: t('prescription') || 'Prescriptions', color: '#34a853', href: '/prescriptions' },
-    { label: 'Rare Medicines', color: '#ea4335', href: '/rare-medicines' },
-    { label: t('about') || 'About', color: '#fbbc04', href: '/about' },
-  ];
-
   return (
-    <Container maxWidth="lg" sx={{ py: 3, pb: 10 }}>
-      {/* Header */}
-      <Box sx={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center',
-        mb: 4 
-      }}>
-        <Box>
-          <Typography 
-            variant="h4" 
-            component="h1" 
-            sx={{ 
-              fontWeight: 400,
-              color: '#202124',
-              mb: 1
-            }}
-          >
-            {t('welcome') || 'Welcome to Helio Pharmacy'}
-          </Typography>
-          <Typography 
-            variant="body1" 
-            sx={{ 
-              color: '#5f6368'
-            }}
-          >
-            {t('overview') || 'Pharmacy management dashboard for healthcare professionals'}
-          </Typography>
-        </Box>
+    <Container maxWidth="md" sx={{ py: 4, pb: 12 }}>
+      {/* Header Section */}
+      <Box sx={{ textAlign: 'center', mb: 6 }}>
+        <Typography 
+          variant="h3" 
+          component="h1" 
+          sx={{ 
+            fontWeight: 300,
+            color: '#202124',
+            mb: 2,
+            letterSpacing: '-0.5px'
+          }}
+        >
+          Welcome to Helio Pharmacy
+        </Typography>
+        <Typography 
+          variant="h6" 
+          sx={{ 
+            color: '#5f6368',
+            fontWeight: 300,
+            mb: 4,
+            lineHeight: 1.4
+          }}
+        >
+          Your trusted partner in healthcare management
+        </Typography>
+        
         <Button 
           variant="outlined" 
           onClick={handleLogout}
           sx={{ 
             textTransform: 'none',
-            borderColor: '#ea4335',
-            color: '#ea4335',
+            borderColor: '#dadce0',
+            color: '#5f6368',
+            px: 3,
+            py: 1,
             '&:hover': {
-              backgroundColor: '#fce8e6',
-              borderColor: '#ea4335',
+              backgroundColor: '#f8f9fa',
+              borderColor: '#4285f4',
+              color: '#4285f4'
             }
           }}
         >
-          {t('logout') || 'Logout'}
+          {t('logout') || 'Sign Out'}
         </Button>
       </Box>
 
-      {/* Quick Stats */}
-      <Typography 
-        variant="h6" 
-        sx={{ 
-          mb: 3, 
-          fontWeight: 400,
-          color: '#202124'
-        }}
-      >
-        {t('quickOverview') || 'Quick Overview'}
-      </Typography>
-      
-      <Stack 
-        direction={{ xs: 'column', sm: 'row' }} 
-        spacing={3} 
-        sx={{ mb: 4 }}
-      >
-        {quickStats.map((stat, index) => (
-          <Card 
-            key={index}
-            sx={{ 
-              flex: 1,
-              border: '1px solid #e8eaed',
-              borderRadius: 2,
-              transition: 'transform 0.2s ease-in-out',
+      {/* Current Status */}
+      <Box sx={{ mb: 6 }}>
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            fontWeight: 400,
+            color: '#202124',
+            mb: 3
+          }}
+        >
+          Current Status
+        </Typography>
+        
+        <Box 
+          sx={{ 
+            display: 'grid',
+            gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(4, 1fr)' },
+            gap: 4
+          }}
+        >
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography 
+              variant="h4" 
+              sx={{ 
+                fontWeight: 300,
+                color: '#4285f4',
+                mb: 1
+              }}
+            >
+              1,250
+            </Typography>
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: '#5f6368',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                fontSize: '0.75rem'
+              }}
+            >
+              Available Medicines
+            </Typography>
+          </Box>
+          
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography 
+              variant="h4" 
+              sx={{ 
+                fontWeight: 300,
+                color: '#ea4335',
+                mb: 1
+              }}
+            >
+              12
+            </Typography>
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: '#5f6368',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                fontSize: '0.75rem'
+              }}
+            >
+              Low Stock
+            </Typography>
+          </Box>
+          
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography 
+              variant="h4" 
+              sx={{ 
+                fontWeight: 300,
+                color: '#34a853',
+                mb: 1
+              }}
+            >
+              8
+            </Typography>
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: '#5f6368',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                fontSize: '0.75rem'
+              }}
+            >
+              Pending Orders
+            </Typography>
+          </Box>
+          
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography 
+              variant="h4" 
+              sx={{ 
+                fontWeight: 300,
+                color: '#fbbc04',
+                mb: 1
+              }}
+            >
+              5
+            </Typography>
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: '#5f6368',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                fontSize: '0.75rem'
+              }}
+            >
+              Expiring Soon
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
+
+      <Divider sx={{ my: 5, borderColor: '#e8eaed' }} />
+
+      {/* Quick Navigation */}
+      <Box sx={{ mb: 6 }}>
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            fontWeight: 400,
+            color: '#202124',
+            mb: 4
+          }}
+        >
+          Quick Navigation
+        </Typography>
+        
+        <Box 
+          sx={{ 
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+            gap: 2
+          }}
+        >
+          <Button
+            href="/medicine-stock"
+            variant="text"
+            sx={{
+              py: 2,
+              justifyContent: 'flex-start',
+              textTransform: 'none',
+              color: '#202124',
+              fontSize: '1.1rem',
+              fontWeight: 400,
               '&:hover': {
-                transform: 'translateY(-2px)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                backgroundColor: '#f8f9fa',
+                color: '#4285f4'
               }
             }}
           >
-            <CardContent sx={{ textAlign: 'center', py: 4 }}>
-              <Typography 
-                variant="h3" 
-                component="div" 
-                sx={{ 
-                  fontWeight: 400, 
-                  color: stat.color,
-                  mb: 1 
-                }}
-              >
-                {stat.value}
-              </Typography>
-              <Typography 
-                variant="body1" 
-                sx={{ 
-                  fontWeight: 500,
-                  color: '#5f6368'
-                }}
-              >
-                {stat.label}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
-      </Stack>
-
-      {/* Quick Actions */}
-      <Typography 
-        variant="h6" 
-        sx={{ 
-          mb: 3, 
-          fontWeight: 400,
-          color: '#202124'
-        }}
-      >
-        {t('quickActions') || 'Quick Actions'}
-      </Typography>
-      
-      <Stack 
-        direction={{ xs: 'column', sm: 'row' }} 
-        spacing={3}
-        sx={{ mb: 4 }}
-      >
-        {quickActions.map((action, index) => (
-          <Card 
-            key={index}
-            component="a"
-            href={action.href}
-            sx={{ 
-              flex: 1,
-              cursor: 'pointer',
-              textDecoration: 'none',
-              transition: 'all 0.2s ease-in-out',
-              border: '1px solid #e8eaed',
-              borderRadius: 2,
+            → Medicine Inventory
+          </Button>
+          
+          <Button
+            href="/prescriptions"
+            variant="text"
+            sx={{
+              py: 2,
+              justifyContent: 'flex-start',
+              textTransform: 'none',
+              color: '#202124',
+              fontSize: '1.1rem',
+              fontWeight: 400,
               '&:hover': {
-                transform: 'translateY(-2px)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                borderColor: action.color,
+                backgroundColor: '#f8f9fa',
+                color: '#4285f4'
               }
             }}
           >
-            <CardContent sx={{ textAlign: 'center', py: 4 }}>
-              <Typography 
-                variant="h6" 
-                sx={{ 
-                  fontWeight: 500,
-                  color: action.color,
-                }}
-              >
-                {action.label}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
-      </Stack>
+            → Prescriptions
+          </Button>
+          
+          <Button
+            href="/rare-medicines"
+            variant="text"
+            sx={{
+              py: 2,
+              justifyContent: 'flex-start',
+              textTransform: 'none',
+              color: '#202124',
+              fontSize: '1.1rem',
+              fontWeight: 400,
+              '&:hover': {
+                backgroundColor: '#f8f9fa',
+                color: '#4285f4'
+              }
+            }}
+          >
+            → Rare Medicines
+          </Button>
+          
+          <Button
+            href="/about"
+            variant="text"
+            sx={{
+              py: 2,
+              justifyContent: 'flex-start',
+              textTransform: 'none',
+              color: '#202124',
+              fontSize: '1.1rem',
+              fontWeight: 400,
+              '&:hover': {
+                backgroundColor: '#f8f9fa',
+                color: '#4285f4'
+              }
+            }}
+          >
+            → Contact & About
+          </Button>
+        </Box>
+      </Box>
 
-      {/* Recent Activity */}
-      <Typography 
-        variant="h6" 
-        sx={{ 
-          mb: 3, 
-          fontWeight: 400,
-          color: '#202124'
-        }}
-      >
-        {t('recentActivity') || 'Recent Activity'}
-      </Typography>
-      
-      <Card sx={{ border: '1px solid #e8eaed', borderRadius: 2 }}>
-        <CardContent sx={{ p: 4 }}>
-          <Stack spacing={3}>
-            <Box sx={{ 
-              p: 3, 
-              backgroundColor: '#e8f5e8', 
-              borderRadius: 2,
-              border: '1px solid #34a853'
-            }}>
-              <Typography variant="body1" sx={{ fontWeight: 500, mb: 0.5, color: '#202124' }}>
-                {t('medicineAdded') || 'Medicine Added'}
-              </Typography>
-              <Typography variant="body2" sx={{ color: '#5f6368' }}>
-                {t('paracetamolAdded') || 'Paracetamol 500mg added to inventory'} - 2 {t('hoursAgo') || 'hours ago'}
-              </Typography>
-            </Box>
-            
-            <Box sx={{ 
-              p: 3, 
-              backgroundColor: '#fef7f0', 
-              borderRadius: 2,
-              border: '1px solid #fbbc04'
-            }}>
-              <Typography variant="body1" sx={{ fontWeight: 500, mb: 0.5, color: '#202124' }}>
-                {t('lowStockAlert') || 'Low Stock Alert'}
-              </Typography>
-              <Typography variant="body2" sx={{ color: '#5f6368' }}>
-                {t('amoxicillinLowStock') || 'Amoxicillin running low on stock'} - 4 {t('hoursAgo') || 'hours ago'}
-              </Typography>
-            </Box>
-            
-            <Box sx={{ 
-              p: 3, 
-              backgroundColor: '#e3f2fd', 
-              borderRadius: 2,
-              border: '1px solid #4285f4'
-            }}>
-              <Typography variant="body1" sx={{ fontWeight: 500, mb: 0.5, color: '#202124' }}>
-                {t('orderCompleted') || 'Order Completed'}
-              </Typography>
-              <Typography variant="body2" sx={{ color: '#5f6368' }}>
-                {t('orderFor50') || 'Order for 50 units of Aspirin completed'} - 6 {t('hoursAgo') || 'hours ago'}
-              </Typography>
-            </Box>
-          </Stack>
-        </CardContent>
-      </Card>
+      <Divider sx={{ my: 5, borderColor: '#e8eaed' }} />
+
+      {/* Recent Updates */}
+      <Box>
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            fontWeight: 400,
+            color: '#202124',
+            mb: 3
+          }}
+        >
+          Recent Updates
+        </Typography>
+        
+        <List sx={{ p: 0 }}>
+          <ListItem 
+            sx={{ 
+              px: 0, 
+              py: 2,
+              borderBottom: '1px solid #f1f3f4'
+            }}
+          >
+            <ListItemText
+              primary={
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
+                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124' }}>
+                    Medicine Stock Updated
+                  </Typography>
+                  <Chip 
+                    label="2 hours ago" 
+                    size="small" 
+                    sx={{ 
+                      backgroundColor: '#e8f5e8',
+                      color: '#137333',
+                      fontSize: '0.75rem'
+                    }}
+                  />
+                </Box>
+              }
+              secondary={
+                <Typography variant="body2" sx={{ color: '#5f6368' }}>
+                  Added 100 units of Paracetamol 500mg to inventory
+                </Typography>
+              }
+            />
+          </ListItem>
+          
+          <ListItem 
+            sx={{ 
+              px: 0, 
+              py: 2,
+              borderBottom: '1px solid #f1f3f4'
+            }}
+          >
+            <ListItemText
+              primary={
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
+                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124' }}>
+                    Low Stock Alert
+                  </Typography>
+                  <Chip 
+                    label="4 hours ago" 
+                    size="small" 
+                    sx={{ 
+                      backgroundColor: '#fef7f0',
+                      color: '#b06000',
+                      fontSize: '0.75rem'
+                    }}
+                  />
+                </Box>
+              }
+              secondary={
+                <Typography variant="body2" sx={{ color: '#5f6368' }}>
+                  Amoxicillin stock running low - 15 units remaining
+                </Typography>
+              }
+            />
+          </ListItem>
+          
+          <ListItem 
+            sx={{ 
+              px: 0, 
+              py: 2
+            }}
+          >
+            <ListItemText
+              primary={
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
+                  <Typography variant="body1" sx={{ fontWeight: 500, color: '#202124' }}>
+                    Order Completed
+                  </Typography>
+                  <Chip 
+                    label="6 hours ago" 
+                    size="small" 
+                    sx={{ 
+                      backgroundColor: '#e3f2fd',
+                      color: '#1565c0',
+                      fontSize: '0.75rem'
+                    }}
+                  />
+                </Box>
+              }
+              secondary={
+                <Typography variant="body2" sx={{ color: '#5f6368' }}>
+                  Successfully fulfilled order for 50 units of Aspirin
+                </Typography>
+              }
+            />
+          </ListItem>
+        </List>
+      </Box>
     </Container>
   );
 };
