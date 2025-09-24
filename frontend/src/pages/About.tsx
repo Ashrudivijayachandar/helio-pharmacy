@@ -87,7 +87,7 @@ const About: React.FC = () => {
                 mb: 3
               }}
             >
-              Contact Information
+              {t('contact_information')}
             </Typography>
             
             <List sx={{ 
@@ -136,7 +136,7 @@ const About: React.FC = () => {
                       fontSize: '1rem',
                       mb: 0.5
                     }}>
-                      Email
+                      {t('email')}
                     </Typography>
                   }
                   secondary={

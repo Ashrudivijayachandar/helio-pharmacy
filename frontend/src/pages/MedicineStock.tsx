@@ -337,8 +337,9 @@ const MedicineStock: React.FC = () => {
           />
         </Box>
 
-        {/* Medicine Table */}
+        {/* Desktop Table View */}
         <Box sx={{ 
+          display: { xs: 'none', md: 'block' },
           backgroundColor: '#ffffff',
           borderRadius: '6px',
           border: '1px solid #e1e4e8',
@@ -594,6 +595,258 @@ const MedicineStock: React.FC = () => {
               ))}
             </TableBody>
           </Table>
+        </Box>
+
+        {/* Mobile Card View */}
+        <Box sx={{ 
+          display: { xs: 'block', md: 'none' },
+          '& > *': { mb: 2 }
+        }}>
+          {filteredMedicines.map((medicine) => (
+            <Card
+              key={medicine.id}
+              sx={{
+                backgroundColor: '#ffffff',
+                border: '1px solid #e1e4e8',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <CardContent sx={{ p: 3 }}>
+                {editingId === medicine.id ? (
+                  // Edit Mode
+                  <Box>
+                    <Typography sx={{ 
+                      color: '#24292e',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px',
+                      mb: 2
+                    }}>
+                      Edit Medicine
+                    </Typography>
+                    
+                    <Stack spacing={2}>
+                      <Box>
+                        <Typography sx={{ 
+                          color: '#586069',
+                          fontSize: '0.85rem',
+                          mb: 0.5
+                        }}>
+                          Medicine Name
+                        </Typography>
+                        <TextField
+                          value={editForm.name || medicine.name}
+                          onChange={(e) => setEditForm(prev => ({ ...prev, name: e.target.value }))}
+                          size="small"
+                          fullWidth
+                          sx={{
+                            '& .MuiOutlinedInput-root': {
+                              backgroundColor: '#f6f8fa',
+                              borderRadius: '4px',
+                              fontSize: '0.9rem',
+                            }
+                          }}
+                        />
+                      </Box>
+                      
+                      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
+                        <Box>
+                          <Typography sx={{ 
+                            color: '#586069',
+                            fontSize: '0.85rem',
+                            mb: 0.5
+                          }}>
+                            Stock
+                          </Typography>
+                          <TextField
+                            type="number"
+                            value={editForm.stock ?? medicine.stock}
+                            onChange={(e) => setEditForm(prev => ({ ...prev, stock: parseInt(e.target.value) || 0 }))}
+                            size="small"
+                            fullWidth
+                            inputProps={{ min: 0 }}
+                            sx={{
+                              '& .MuiOutlinedInput-root': {
+                                backgroundColor: '#f6f8fa',
+                                borderRadius: '4px',
+                                fontSize: '0.85rem',
+                              }
+                            }}
+                          />
+                        </Box>
+                        
+                        <Box>
+                          <Typography sx={{ 
+                            color: '#586069',
+                            fontSize: '0.85rem',
+                            mb: 0.5
+                          }}>
+                            Expiry Date
+                          </Typography>
+                          <TextField
+                            type="date"
+                            value={editForm.expiryDate || medicine.expiryDate}
+                            onChange={(e) => setEditForm(prev => ({ ...prev, expiryDate: e.target.value }))}
+                            size="small"
+                            fullWidth
+                            sx={{
+                              '& .MuiOutlinedInput-root': {
+                                backgroundColor: '#f6f8fa',
+                                borderRadius: '4px',
+                                fontSize: '0.85rem',
+                              }
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                      
+                      <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end', pt: 1 }}>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          onClick={handleEditSave}
+                          startIcon={<SaveIcon />}
+                          sx={{ 
+                            backgroundColor: '#28a745',
+                            textTransform: 'none',
+                            fontSize: '0.85rem'
+                          }}
+                        >
+                          Save
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          size="small"
+                          onClick={handleEditCancel}
+                          startIcon={<CancelIcon />}
+                          sx={{ 
+                            color: '#dc3545',
+                            borderColor: '#dc3545',
+                            textTransform: 'none',
+                            fontSize: '0.85rem'
+                          }}
+                        >
+                          Cancel
+                        </Button>
+                      </Box>
+                    </Stack>
+                  </Box>
+                ) : (
+                  // View Mode
+                  <Box>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      justifyContent: 'space-between', 
+                      alignItems: 'flex-start',
+                      mb: 2
+                    }}>
+                      <Box sx={{ flex: 1 }}>
+                        <Typography 
+                          sx={{ 
+                            color: '#0366d6',
+                            fontSize: '1rem',
+                            fontWeight: 600,
+                            mb: 0.5
+                          }}
+                        >
+                          {medicine.name}
+                        </Typography>
+                        <Typography sx={{ 
+                          color: '#586069',
+                          fontSize: '0.85rem'
+                        }}>
+                          ID: Ph{medicine.id.toString().padStart(2, '0')}
+                        </Typography>
+                      </Box>
+                      
+                      <Box sx={{ display: 'flex', gap: 0.5 }}>
+                        <IconButton
+                          size="small"
+                          onClick={() => handleEditStart(medicine)}
+                          sx={{ 
+                            color: '#0366d6',
+                            backgroundColor: 'rgba(3, 102, 214, 0.08)',
+                            borderRadius: '6px',
+                            '&:hover': { 
+                              backgroundColor: 'rgba(3, 102, 214, 0.12)' 
+                            }
+                          }}
+                        >
+                          <EditIcon fontSize="small" />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          onClick={() => handleDelete(medicine.id)}
+                          sx={{ 
+                            color: '#dc3545',
+                            backgroundColor: 'rgba(220, 53, 69, 0.08)',
+                            borderRadius: '6px',
+                            '&:hover': { 
+                              backgroundColor: 'rgba(220, 53, 69, 0.12)' 
+                            }
+                          }}
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+                    </Box>
+                    
+                    <Box sx={{ 
+                      display: 'grid', 
+                      gridTemplateColumns: '1fr 1fr', 
+                      gap: 2,
+                      pt: 2,
+                      borderTop: '1px solid #f1f3f4'
+                    }}>
+                      <Box>
+                        <Typography sx={{ 
+                          color: '#586069',
+                          fontSize: '0.75rem',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.5px',
+                          mb: 0.5
+                        }}>
+                          Stock Status
+                        </Typography>
+                        <Typography 
+                          sx={{ 
+                            color: medicine.status === 'in-stock' ? '#28a745' : 
+                                   medicine.status === 'low-stock' ? '#28a745' : '#dc3545',
+                            fontSize: '0.9rem',
+                            fontWeight: 600
+                          }}
+                        >
+                          {medicine.status === 'out-of-stock' ? 'Out of Stock' : 'In Stock'}
+                        </Typography>
+                      </Box>
+                      
+                      <Box>
+                        <Typography sx={{ 
+                          color: '#586069',
+                          fontSize: '0.75rem',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.5px',
+                          mb: 0.5
+                        }}>
+                          Expiry Date
+                        </Typography>
+                        <Typography sx={{ 
+                          color: '#24292e',
+                          fontSize: '0.9rem',
+                          fontWeight: 500
+                        }}>
+                          {new Date(medicine.expiryDate).toLocaleDateString('en-GB')}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                )}
+              </CardContent>
+            </Card>
+          ))}
         </Box>
       </Box>
 

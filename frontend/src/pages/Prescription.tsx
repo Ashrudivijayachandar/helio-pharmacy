@@ -13,6 +13,7 @@ import {
   Person as PersonIcon,
   DateRange as DateIcon,
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 interface PrescriptionImage {
   id: number;
@@ -59,6 +60,7 @@ const MOCK_PRESCRIPTION_IMAGES: PrescriptionImage[] = [
 ];
 
 const Prescription: React.FC = () => {
+  const { t } = useTranslation();
   const [prescriptionImages, setPrescriptionImages] = useState<PrescriptionImage[]>([]);
   const [selectedPrescription, setSelectedPrescription] = useState<PrescriptionImage | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -99,7 +101,7 @@ const Prescription: React.FC = () => {
             mb: 1
           }}
         >
-          Prescription Images
+          {t('prescription_images')}
         </Typography>
         <Typography 
           variant="body1" 
@@ -108,7 +110,7 @@ const Prescription: React.FC = () => {
             fontSize: '0.95rem'
           }}
         >
-          View uploaded prescription images from patients
+          {t('view_uploaded_prescription_images')}
         </Typography>
       </Box>
 
@@ -200,7 +202,7 @@ const Prescription: React.FC = () => {
                   }}
                   onClick={() => handleViewPrescription(prescription)}
                 >
-                  View Prescription
+                  {t('view_image')}
                 </Button>
               </CardContent>
             </Card>
@@ -272,7 +274,7 @@ const Prescription: React.FC = () => {
                     }
                   }}
                 >
-                  Close
+                  {t('close')}
                 </Button>
               </Box>
 

@@ -18,6 +18,7 @@ import {
   Button,
   Stack,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import {
   Dashboard as DashboardIcon,
   LocalPharmacy as PharmacyIcon,
@@ -45,6 +46,7 @@ interface RecentActivity {
 }
 
 const Dashboard: React.FC = () => {
+  const { t } = useTranslation();
   const [stats, setStats] = useState<DashboardStats>({
     totalMedicines: 0,
     totalPatients: 0,
@@ -159,7 +161,7 @@ const Dashboard: React.FC = () => {
     <Box sx={{ flexGrow: 1, p: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h4" component="h1">
-          Dashboard
+          {t('dashboard')}
         </Typography>
         <Button
           variant="outlined"
@@ -167,7 +169,7 @@ const Dashboard: React.FC = () => {
           onClick={fetchDashboardData}
           disabled={loading}
         >
-          Refresh
+          {t('refresh')}
         </Button>
       </Box>
 
@@ -179,25 +181,25 @@ const Dashboard: React.FC = () => {
         flexWrap="wrap"
       >
         <StatCard
-          title="Total Medicines"
+          title={t('total_medicines')}
           value={stats.totalMedicines}
           icon={<PharmacyIcon sx={{ color: 'white' }} />}
           color="#1976d2"
         />
         <StatCard
-          title="Total Patients"
+          title={t('total_patients')}
           value={stats.totalPatients}
           icon={<PeopleIcon sx={{ color: 'white' }} />}
           color="#388e3c"
         />
         <StatCard
-          title="Prescriptions"
+          title={t('prescriptions')}
           value={stats.totalPrescriptions}
           icon={<DashboardIcon sx={{ color: 'white' }} />}
           color="#f57c00"
         />
         <StatCard
-          title="Low Stock Items"
+          title={t('low_stock_alerts')}
           value={stats.lowStockItems}
           icon={<WarningIcon sx={{ color: 'white' }} />}
           color="#d32f2f"
@@ -211,16 +213,16 @@ const Dashboard: React.FC = () => {
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Recent Activity
+                {t('recent_activity')}
               </Typography>
               <TableContainer>
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Type</TableCell>
-                      <TableCell>Description</TableCell>
-                      <TableCell>Time</TableCell>
-                      <TableCell>Status</TableCell>
+                      <TableCell>{t('type')}</TableCell>
+                      <TableCell>{t('description')}</TableCell>
+                      <TableCell>{t('time')}</TableCell>
+                      <TableCell>{t('status')}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -254,25 +256,25 @@ const Dashboard: React.FC = () => {
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                System Status
+                {t('system_status')}
               </Typography>
               <Stack spacing={2}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Typography variant="body2">Database</Typography>
-                  <Chip label="Online" color="success" size="small" />
+                  <Typography variant="body2">{t('database')}</Typography>
+                  <Chip label={t('online')} color="success" size="small" />
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Typography variant="body2">API Server</Typography>
-                  <Chip label="Online" color="success" size="small" />
+                  <Typography variant="body2">{t('api_server')}</Typography>
+                  <Chip label={t('online')} color="success" size="small" />
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Typography variant="body2">Backup System</Typography>
-                  <Chip label="Pending" color="warning" size="small" />
+                  <Typography variant="body2">{t('backup_system')}</Typography>
+                  <Chip label={t('pending')} color="warning" size="small" />
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Typography variant="body2">Last Backup</Typography>
+                  <Typography variant="body2">{t('last_backup')}</Typography>
                   <Typography variant="body2" color="textSecondary">
-                    2 hours ago
+                    2 {t('hours_ago')}
                   </Typography>
                 </Box>
               </Stack>
